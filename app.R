@@ -14,16 +14,16 @@ CAPA_CONFIG <- list(
   # [tipo_geom, group_name, nombre_buig]
   
   ## Grupo 1: Desagregación geográfica
-  'g1_c1' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="limite_municipal", cols=c("cvegeo", "nomgeo", "the_geom"), data = NULL,color = "black", size = 6, name = "Municipios"),  # Municipios
-  'g1_c2' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="poblacion_scince_2020ageb", cols=c("cve_ent", "cve_mun", "cve_loc", "cve_ageb", "pob1", "geom"), data = NULL,color = "black", size = 6, name = "AGEB"),  # AGEB
-  'g1_c3' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="poblacion_scince_2020localidad_urbana", cols=c("nomgeo", "cabecera", "cve_mun", "cve_loc", "pob1", "geom"), data = NULL,color = "black", size = 6, name = "Localidad Urbana"),  # Localidad Urbana
-  'g1_c4' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="poblacion_scince_2020localidad rural", cols=c("nomgeo", "nom_ent", "pob1", "geom"), data = NULL),  # Localidad Rural
-  'g1_c5' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="regionalizacion", cols=c("region", "the_geom"), data = NULL),  # Regiones
+  'g1_c1' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="limite_municipal_simple", cols=c("cvegeo", "nomgeo", "the_geom"), data = NULL,color = "black", size = 6, name = "Municipios"),  # Municipios
+  'g1_c2' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="agebs_simple", cols=c("cve_ent", "cve_mun", "cve_loc", "cve_ageb", "pob1", "geom"), data = NULL,color = "black", size = 6, name = "AGEB"),  # AGEB
+  'g1_c3' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_urb_simple", cols=c("nomgeo", "cabecera", "cve_mun", "cve_loc", "pob1", "geom"), data = NULL,color = "black", size = 6, name = "Localidad Urbana"),  # Localidad Urbana
+  'g1_c4' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_rur_simple rural", cols=c("nomgeo", "nom_ent", "pob1", "geom"), data = NULL),  # Localidad Rural
+  'g1_c5' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="regiones_simple", cols=c("region", "the_geom"), data = NULL),  # Regiones
   
   ## Grupo 2: Capas de Salud
   'g2_c1' = list(tipo_geom="POINT", group="Infraestructura de Salud", nombre_buig='13salud', cols=c("nombre", "unidad", "admin","geom"), data = NULL), # Centros de Salud
-  'g2_c2' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo", cols=c("name", "area", "geom"), data = NULL),  # Hospital General
-  'g2_c3' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo", cols=c("name", "area", "geom"), data = NULL),  # Hospital regional
+  'g2_c2' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_gral", cols=c("name", "area", "geom"), data = NULL),  # Hospital General
+  'g2_c3' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_reg", cols=c("name", "area", "geom"), data = NULL),  # Hospital regional
   
   ## Grupo 3: Recursos Hídricos y Cuencas
   'g3_c1' = list(tipo_geom="LINESTRING", group="Recursos Hídricos y Cuencas", nombre_buig="canales", cols=c("identifica", "condicion", "geom"), data = NULL),  # Canales
@@ -222,7 +222,7 @@ ui <- page_sidebar(
     add_busy_spinner(spin = "fading-circle",position = "bottom-right",margins = c("5vh","5vw"))
   )
 )
-source("Scripts/db_con.R")
+#source("Scripts/db_con.R")
 
 server <- function(input, output, session) {
   #source("../../../Reutilizables/Postgres_BUIG/conexion_buig.R")
@@ -444,7 +444,7 @@ server <- function(input, output, session) {
         if (rv_config$CAPA_CONFIG_DATA[[layer_key]]$data |> is.null()) {
           print("Se lee desde el buig")
           print(config$nombre_buig)
-          data_sf <-st_read(buig,config$nombre_buig) #load_layer_data(buig = buig,
+          data_sf <-st_read(paste0("Inputs/",config$nombre_buig,".geojson")) #load_layer_data(buig = buig,
                       #               nombre_buig =  config$nombre_buig,
                        #              columnas_interes = config$cols,
                         #             custom_filter = ifelse(config$custom_filter |> is.null(),'',config$custom_filter))###Aqui se ve a cambiar por la función custom de dplyr.
