@@ -21,7 +21,8 @@ buig <- DBI::dbConnect(
 
 
 Lista_BUIG=DBI::dbListTables(buig) |> as.list()
-
+print(Lista_BUIG)
+print(DBI::dbIsValid(buig))
 library(sf)
 
 print("Ejemplo de uso: ")
