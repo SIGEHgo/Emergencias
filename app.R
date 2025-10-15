@@ -298,7 +298,7 @@ server <- function(input, output, session) {
   #   print(class(input$mapa_principal_draw_new_feature))
   # })
   rv_map_params <- rv_config
-  ALL_BUTTON_KEYS <- c("g1_c1", "g1_c2","g1_c3","g1_c4","g1_c5") # Lista de todas las capas
+  ALL_BUTTON_KEYS <- ALL_LAYER_KEYS # Lista de todas las capas
   ALL_BUTTON_INPUTS <- paste0(ALL_BUTTON_KEYS, "_btn") # Lista de IDs de input
   ALL_SAVE_BUTTONS=paste0("modal_",ALL_BUTTON_KEYS,"_save")
   #Igual g1_c2
