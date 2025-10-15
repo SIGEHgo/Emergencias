@@ -222,11 +222,11 @@ ui <- page_sidebar(
     add_busy_spinner(spin = "fading-circle",position = "bottom-right",margins = c("5vh","5vw"))
   )
 )
-
+source("Scripts/db_con.R")
 
 server <- function(input, output, session) {
   #source("../../../Reutilizables/Postgres_BUIG/conexion_buig.R")
-  source("Scripts/db_con.R")
+  
   # 2. Cerrar la conexión cuando la sesión termina
   session$onSessionEnded(function() {
     if (DBI::dbIsValid(buig)) {
