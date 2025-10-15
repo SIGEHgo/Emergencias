@@ -298,7 +298,7 @@ server <- function(input, output, session) {
   #   print(class(input$mapa_principal_draw_new_feature))
   # })
   rv_map_params <- rv_config
-  ALL_BUTTON_KEYS <- ALL_LAYER_KEYS # Lista de todas las capas
+  ALL_BUTTON_KEYS <- c("g1_c1", "g1_c2","g1_c3","g1_c4","g1_c5") # Lista de todas las capas
   ALL_BUTTON_INPUTS <- paste0(ALL_BUTTON_KEYS, "_btn") # Lista de IDs de input
   ALL_SAVE_BUTTONS=paste0("modal_",ALL_BUTTON_KEYS,"_save")
   #Igual g1_c2
@@ -443,6 +443,7 @@ server <- function(input, output, session) {
         #load_layer_data(layer_key)
         if (rv_config$CAPA_CONFIG_DATA[[layer_key]]$data |> is.null()) {
           print("Se lee desde el buig")
+          Sys.sleep(1)
           data_sf <- load_layer_data(buig = buig,
                                      nombre_buig =  config$nombre_buig,
                                      columnas_interes = config$cols,
@@ -451,6 +452,7 @@ server <- function(input, output, session) {
           
         } else {
           print("Se lee desde local ")
+          Sys.sleep(1)
           data_sf <- rv_config$CAPA_CONFIG_DATA[[layer_key]]$data 
         }
         
