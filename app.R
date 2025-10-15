@@ -27,7 +27,7 @@ CAPA_CONFIG <- list(
   
   ## Grupo 3: Recursos Hídricos
   'g3_c1' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="canales", cols=c("identifica", "condicion", "geom"), data = NULL),  # Canales
-  'g3_c2' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="pozos_con_nivel_piezometrico", cols=c("nom_pozo", "geom"), data = NULL),  # Pozos
+  'g3_c2' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="Pozos_de_Estado_de_Hidalgo", cols=c("nombre","tipo", "geom"), data = NULL),  # Pozos
   'g3_c3' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="rios", cols=c("nombre", "condicion", "st_length_", "geom"), data = NULL), # Ríos
   'g3_c4' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="manantiales_50_inegi", cols=c("nom_man", "geom"), data = NULL),  # Manantiales
   'g3_c5' = list(tipo_geom="POLYGON", group="Recursos Hídricos", nombre_buig="cuerpos_de_agua", cols=c("condicion", "shape_leng", "shape_area","geom"), data = NULL),  # Cuerpos de Agua
@@ -40,6 +40,7 @@ CAPA_CONFIG <- list(
   'g4_c3' = list(tipo_geom="POLYGON", group="Zonificación de Vulnerabilidad", nombre_buig="zonificacion_de_vulnerabilidad_y_areas_susceptibles_a_hundimien", cols=c("peligro", "geom"), data = NULL),  # Hundimiento
   'g4_c4' = list(tipo_geom="LINESTRING", group="Zonificación de Vulnerabilidad", nombre_buig="estructuras_geologicas", cols=c("entidad", "geom"), data = NULL),  # Fallas geológicas
   'g4_c5' = list(tipo_geom="POLYGON", group="Zonificación de Vulnerabilidad", nombre_buig="inundacion", cols=c("objectid", "geom"), data = NULL), # Zonas de Inundación
+  'g4_c6' = list(tipo_geom="POINT", group="Zonificación de Vulnerabilidad", nombre_buig="PRIORIDAD_ESCUELAS", cols=c('claveseph','Nombre_d_1','LOCALIDAD','MUNICIPIO','total', "geom"), data = NULL), # Escuelas en riesgo
   
   ## Grupo 5: Infraestructura Vial
   'g5_c1' = list(tipo_geom="POINT", group="Infraestructura Vial", nombre_buig="puentes_hgo", cols=c("tipo", "nombre", "altura", "ancho", "geom"), data = NULL),  # Estructuras Viales
@@ -202,7 +203,8 @@ ui <- page_sidebar(
                       layer_control_item("g4_c2", "Susceptibles a deslizamiento"),
                       layer_control_item("g4_c3", "Hundimiento"),
                       layer_control_item("g4_c4", "Fallas geológicas"),
-                      layer_control_item("g4_c5", "Zonas de Inundación")
+                      layer_control_item("g4_c5", "Zonas de Inundación"),
+                      layer_control_item("g4_c6", "Escuelas prioritarias por riesgos")
       ),
       
       # G5: Infraestructura Vial
