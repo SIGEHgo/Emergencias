@@ -486,7 +486,7 @@ server <- function(input, output, session) {
         } else if (geom_type %in% c("LINESTRING", "MULTILINESTRING")) {
           proxy |> addPolylines(data = data_sf, color = "black", weight = 3, opacity = 0.8, group = layer_key,popup=popup_general(data_sf)|> as.character())
         } else if (geom_type %in% c("POINT", "MULTIPOINT")) {
-          proxy |> addCircleMarkers(data = data_sf, radius = 6, color = "red", fillOpacity = 0.9, group = layer_key,popup=popup_general(data_sf)|> as.character()) |> fitBounds()
+          proxy |> addCircleMarkers(data = data_sf, radius = 6, color = "red", fillOpacity = 0.9, group = layer_key,popup=popup_general(data_sf)|> as.character())
         }
         
         successful_layers <- c(successful_layers, layer_key)
