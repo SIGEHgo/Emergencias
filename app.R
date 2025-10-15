@@ -132,7 +132,22 @@ config_modal <- function(layer_key, layer_name, initial_color) {
     )
   )
 }
-
+popup_general = function(datos_sf = datos_sf) {
+  
+  columnas = names(datos_sf)
+  columnas = columnas[columnas != "geom"] 
+  columnas = columnas[columnas != "geometry"] 
+  
+  popup = apply(
+    sf::st_drop_geometry(datos_sf)[, columnas], 
+    1, 
+    function(fila) {
+      campos =  paste0("<b>", columnas, ":</b> ", fila, collapse = "<br>")
+      htmltools::HTML(campos)
+    }
+  )
+  return(popup)
+}
 ui <- page_sidebar(
   title = "Explorador de Capas Geográficas de Emergencia",
   sidebar = sidebar(
@@ -298,7 +313,7 @@ server <- function(input, output, session) {
   #   print(class(input$mapa_principal_draw_new_feature))
   # })
   rv_map_params <- rv_config
-  ALL_BUTTON_KEYS <- c("g1_c1", "g1_c2","g1_c3","g1_c4","g1_c5") # Lista de todas las capas
+  ALL_BUTTON_KEYS <- names(CAPA_CONFIG)  # Lista de todas las capas
   ALL_BUTTON_INPUTS <- paste0(ALL_BUTTON_KEYS, "_btn") # Lista de IDs de input
   ALL_SAVE_BUTTONS=paste0("modal_",ALL_BUTTON_KEYS,"_save")
   #Igual g1_c2
@@ -409,11 +424,11 @@ server <- function(input, output, session) {
       geom_type <- as.character(unique(st_geometry_type(data_para_agregar)))[1]
 
       if (geom_type %in% c("POLYGON", "MULTIPOLYGON")) {
-        proxy |> addPolygons(data = data_para_agregar, fillColor =input[[modal_col_id]], color = "white", weight = 1, fillOpacity = 0.4, group = layer_key)
+        proxy |> addPolygons(data = data_para_agregar, fillColor =input[[modal_col_id]], color = "white",stroke=input[[modal_size_id]], weight = 1, fillOpacity = 0.4, group = layer_key,popup=popup_general(data_para_agregar))
       } else if (geom_type %in% c("LINESTRING", "MULTILINESTRING")) {
-        proxy |> addPolylines(data = data_para_agregar, color = input[[modal_col_id]], weight = 3, opacity = 0.8, group = layer_key)
+        proxy |> addPolylines(data = data_para_agregar, color = input[[modal_col_id]], weight = 3,stroke=input[[modal_size_id]], opacity = 0.8, group = layer_key,popup=popup_general(data_para_agregar))
       } else if (geom_type %in% c("POINT", "MULTIPOINT")) {
-        proxy |> addCircleMarkers(data = data_para_agregar, radius = 6, color = input[[modal_col_id]], fillOpacity = 0.9, group = layer_key)
+        proxy |> addCircleMarkers(data = data_para_agregar, radius = input[[modal_size_id]], color = input[[modal_col_id]], fillOpacity = 0.9, group = layer_key,popup=popup_general(data_para_agregar))
       }
     }
   }, ignoreInit = TRUE)
@@ -460,11 +475,11 @@ server <- function(input, output, session) {
         
 
         if (geom_type %in% c("POLYGON", "MULTIPOLYGON")) {
-          proxy |> addPolygons(data = data_sf, fillColor = "#66A3D2", color = "white", weight = 1, fillOpacity = 0.4, group = layer_key)
+          proxy |> addPolygons(data = data_sf, fillColor = "#66A3D2", color = "white", weight = 1, fillOpacity = 0.4, group = layer_key,popup=popup_general(data_sf))
         } else if (geom_type %in% c("LINESTRING", "MULTILINESTRING")) {
-          proxy |> addPolylines(data = data_sf, color = "black", weight = 3, opacity = 0.8, group = layer_key)
+          proxy |> addPolylines(data = data_sf, color = "black", weight = 3, opacity = 0.8, group = layer_key,popup=popup_general(data_sf))
         } else if (geom_type %in% c("POINT", "MULTIPOINT")) {
-          proxy |> addCircleMarkers(data = data_sf, radius = 6, color = "red", fillOpacity = 0.9, group = layer_key)
+          proxy |> addCircleMarkers(data = data_sf, radius = 6, color = "red", fillOpacity = 0.9, group = layer_key,popup=popup_general(data_sf))
         }
         
         successful_layers <- c(successful_layers, layer_key)
