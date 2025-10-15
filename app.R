@@ -17,7 +17,7 @@ CAPA_CONFIG <- list(
   'g1_c1' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="limite_municipal_simple", cols=c("cvegeo", "nomgeo", "the_geom"), data = NULL,color = "black", size = 6, name = "Municipios"),  # Municipios
   'g1_c2' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="agebs_simple", cols=c("cve_ent", "cve_mun", "cve_loc", "cve_ageb", "pob1", "geom"), data = NULL,color = "black", size = 6, name = "AGEB"),  # AGEB
   'g1_c3' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_urb_simple", cols=c("nomgeo", "cabecera", "cve_mun", "cve_loc", "pob1", "geom"), data = NULL,color = "black", size = 6, name = "Localidad Urbana"),  # Localidad Urbana
-  'g1_c4' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_rur_simple rural", cols=c("nomgeo", "nom_ent", "pob1", "geom"), data = NULL),  # Localidad Rural
+  'g1_c4' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_rur_simple", cols=c("nomgeo", "nom_ent", "pob1", "geom"), data = NULL),  # Localidad Rural
   'g1_c5' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="regiones_simple", cols=c("region", "the_geom"), data = NULL),  # Regiones
   
   ## Grupo 2: Capas de Salud
@@ -25,12 +25,13 @@ CAPA_CONFIG <- list(
   'g2_c2' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_gral", cols=c("name", "area", "geom"), data = NULL),  # Hospital General
   'g2_c3' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_reg", cols=c("name", "area", "geom"), data = NULL),  # Hospital regional
   
-  ## Grupo 3: Recursos Hídricos y Cuencas
-  'g3_c1' = list(tipo_geom="LINESTRING", group="Recursos Hídricos y Cuencas", nombre_buig="canales", cols=c("identifica", "condicion", "geom"), data = NULL),  # Canales
-  'g3_c2' = list(tipo_geom="POINT", group="Recursos Hídricos y Cuencas", nombre_buig="pozos_con_nivel_piezometrico", cols=c("nom_pozo", "geom"), data = NULL),  # Pozos
-  'g3_c3' = list(tipo_geom="LINESTRING", group="Recursos Hídricos y Cuencas", nombre_buig="rios", cols=c("nombre", "condicion", "st_length_", "geom"), data = NULL), # Ríos
-  'g3_c4' = list(tipo_geom="POINT", group="Recursos Hídricos y Cuencas", nombre_buig="manantiales_50_inegi", cols=c("nom_man", "geom"), data = NULL),  # Manantiales
-  'g3_c5' = list(tipo_geom="POLYGON", group="Recursos Hídricos y Cuencas", nombre_buig="cuerpos_de_agua", cols=c("condicion", "shape_leng", "shape_area","geom"), data = NULL),  # Cuerpos de Agua
+  ## Grupo 3: Recursos Hídricos
+  'g3_c1' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="canales", cols=c("identifica", "condicion", "geom"), data = NULL),  # Canales
+  'g3_c2' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="pozos_con_nivel_piezometrico", cols=c("nom_pozo", "geom"), data = NULL),  # Pozos
+  'g3_c3' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="rios", cols=c("nombre", "condicion", "st_length_", "geom"), data = NULL), # Ríos
+  'g3_c4' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="manantiales_50_inegi", cols=c("nom_man", "geom"), data = NULL),  # Manantiales
+  'g3_c5' = list(tipo_geom="POLYGON", group="Recursos Hídricos", nombre_buig="cuerpos_de_agua", cols=c("condicion", "shape_leng", "shape_area","geom"), data = NULL),  # Cuerpos de Agua
+  'g3_c6' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="Estructuras_elevadas", cols=c("geografico","tipo","geom"), data = NULL),  # Oficina
   
   ## Grupo 4: Zonificación de Vulnerabilidad
   # g4_c5 simula un error de carga para demostrar el manejo de excepciones.
@@ -42,17 +43,16 @@ CAPA_CONFIG <- list(
   
   ## Grupo 5: Infraestructura Vial
   'g5_c1' = list(tipo_geom="POINT", group="Infraestructura Vial", nombre_buig="estructuras_viales", cols=c("tipo", "nombre", "altura", "ancho", "geom"), data = NULL),  # Estructuras Viales
-  'g5_c2' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter=c("administra",'Federal')), # Carreteras Federales
-  'g5_c3' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Estatal'),  # Carreteras Estatales
-  'g5_c4' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Municipal'),  # Carreteras Municipales
+  'g5_c2' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_federal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter=c("administra",'Federal')), # Carreteras Federales
+  'g5_c3' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_estatal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Estatal'),  # Carreteras Estatales
+  'g5_c4' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_municipal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Municipal'),  # Carreteras Municipales
 
   ## Grupo 6: Otra Infraestructura
   'g6_c1' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="subestacion_electrica", cols=c("geografico", "nombre", "condicion",'geom'), data = NULL),  # Estaciones eléctricas
-  'g6_c2' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="Estructuras_elevadas", cols=c("geografico","tipo","geom"), data = NULL),  # Oficina
-  'g6_c3' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_nacionales", cols=c("nom_estab", "municipio","localidad", "geom"), data = NULL),  # Oficina
-  'g6_c4' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_estatales", cols=c("nom_estab", "geom"), data = NULL),  # Oficina
-  'g6_c5' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_municipales", cols=c("nom_estab", "municipio","localidad","geom"), data = NULL),  # Oficina
-  'g6_c6' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_regionales", cols=c("nom_estab", "municipio","localidad", "geom"), data = NULL),  # Oficina
+  'g6_c2' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_nacionales", cols=c("nom_estab", "municipio","localidad", "geom"), data = NULL),  # Oficina
+  'g6_c3' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_estatales", cols=c("nom_estab", "geom"), data = NULL),  # Oficina
+  'g6_c4' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_municipales", cols=c("nom_estab", "municipio","localidad","geom"), data = NULL),  # Oficina
+  'g6_c5' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_regionales", cols=c("nom_estab", "municipio","localidad", "geom"), data = NULL),  # Oficina
   
   ## Grupo 7: Puntos de Reunión y Centros de Acopio
   'g7_c1' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="centros_de_acopio", cols=c("nom_estab", "tipo", "geom"), data = NULL),  # Centros de Acopio
@@ -135,15 +135,22 @@ config_modal <- function(layer_key, layer_name, initial_color) {
 popup_general = function(datos_sf = datos_sf) {
   
   columnas = names(datos_sf)
+  # Filtramos columnas de geometría
   columnas = columnas[columnas != "geom"] 
   columnas = columnas[columnas != "geometry"] 
   
+  if (length(columnas) == 0) {
+    return(rep(htmltools::HTML("<b>Sin datos disponibles</b>"), nrow(datos_sf)))
+  }
+  
   popup = apply(
-    sf::st_drop_geometry(datos_sf)[, columnas], 
-    1, 
+    # 🚨 CORRECCIÓN CLAVE: Usar drop = FALSE para mantener la estructura de data frame
+    sf::st_drop_geometry(datos_sf)[, columnas, drop = FALSE], 
+    1, # Aplicar por fila
     function(fila) {
+      # Nota: 'fila' será un vector, incluso si solo hay una columna
       campos =  paste0("<b>", columnas, ":</b> ", fila, collapse = "<br>")
-      htmltools::HTML(campos)
+      return(htmltools::HTML(campos))
     }
   )
   return(popup)
@@ -178,13 +185,14 @@ ui <- page_sidebar(
       ),
       
       # G3: Recursos Hídricos y Cuencas
-      accordion_panel(title = "Recursos Hídricos y Cuencas", icon = icon("water"),
+      accordion_panel(title = "Recursos Hídricos", icon = icon("water"),
                       h5("Selecciona elementos:"),
                       layer_control_item("g3_c1", "Canales"),
                       layer_control_item("g3_c2", "Pozos"),
                       layer_control_item("g3_c3", "Ríos"),
                       layer_control_item("g3_c4", "Manantiales"),
-                      layer_control_item("g3_c5", "Cuerpos de Agua")
+                      layer_control_item("g3_c5", "Cuerpos de Agua"),
+                      layer_control_item("g3_c6", "Estructuras Elevadas"),
       ),
       
       # G4: Zonificación de Vulnerabilidad
@@ -210,11 +218,10 @@ ui <- page_sidebar(
       accordion_panel(title = "Otra Infraestructura", icon = icon("building"),
                       h5("Selecciona elementos:"),
                       layer_control_item("g6_c1", "Estaciones eléctricas"),
-                      layer_control_item("g6_c2", "Estructuras Elevadas"),
-                      layer_control_item("g6_c3", "Oficinas Nacionales"),
-                      layer_control_item("g6_c4", "Oficinas Estatales"),
-                      layer_control_item("g6_c5", "Oficinas Municipales"),
-                      layer_control_item("g6_c6", "Oficinas Regionales")
+                      layer_control_item("g6_c2", "Oficinas Nacionales"),
+                      layer_control_item("g6_c3", "Oficinas Estatales"),
+                      layer_control_item("g6_c4", "Oficinas Municipales"),
+                      layer_control_item("g6_c5", "Oficinas Regionales")
       ),
       
       # G7: Puntos de Reunión y Centros de Acopio
@@ -424,11 +431,11 @@ server <- function(input, output, session) {
       geom_type <- as.character(unique(st_geometry_type(data_para_agregar)))[1]
 
       if (geom_type %in% c("POLYGON", "MULTIPOLYGON")) {
-        proxy |> addPolygons(data = data_para_agregar, fillColor =input[[modal_col_id]], color = "white",stroke=input[[modal_size_id]], weight = 1, fillOpacity = 0.4, group = layer_key,popup=popup_general(data_para_agregar))
+        proxy |> addPolygons(data = data_para_agregar, fillColor =input[[modal_col_id]], color = "black",weight=input[[modal_size_id]], fillOpacity = 0.4, group = layer_key,popup=popup_general(data_para_agregar) |> as.character())
       } else if (geom_type %in% c("LINESTRING", "MULTILINESTRING")) {
-        proxy |> addPolylines(data = data_para_agregar, color = input[[modal_col_id]], weight = 3,stroke=input[[modal_size_id]], opacity = 0.8, group = layer_key,popup=popup_general(data_para_agregar))
+        proxy |> addPolylines(data = data_para_agregar, color = input[[modal_col_id]],weight=input[[modal_size_id]], opacity = 0.8, group = layer_key,popup=popup_general(data_para_agregar)|> as.character())
       } else if (geom_type %in% c("POINT", "MULTIPOINT")) {
-        proxy |> addCircleMarkers(data = data_para_agregar, radius = input[[modal_size_id]], color = input[[modal_col_id]], fillOpacity = 0.9, group = layer_key,popup=popup_general(data_para_agregar))
+        proxy |> addCircleMarkers(data = data_para_agregar, radius = input[[modal_size_id]], color = input[[modal_col_id]], fillOpacity = 0.9, group = layer_key,popup=popup_general(data_para_agregar)|> as.character()) 
       }
     }
   }, ignoreInit = TRUE)
@@ -459,7 +466,7 @@ server <- function(input, output, session) {
         if (rv_config$CAPA_CONFIG_DATA[[layer_key]]$data |> is.null()) {
           print("Se lee desde el buig")
           print(config$nombre_buig)
-          data_sf <-st_read(paste0("Inputs/",config$nombre_buig,".geojson")) #load_layer_data(buig = buig,
+          data_sf <-st_read(paste0("Inputs/",config$nombre_buig,".geojson")) |> dplyr::filter(!st_is_empty(geometry)) #load_layer_data(buig = buig,
                       #               nombre_buig =  config$nombre_buig,
                        #              columnas_interes = config$cols,
                         #             custom_filter = ifelse(config$custom_filter |> is.null(),'',config$custom_filter))###Aqui se ve a cambiar por la función custom de dplyr.
@@ -475,11 +482,11 @@ server <- function(input, output, session) {
         
 
         if (geom_type %in% c("POLYGON", "MULTIPOLYGON")) {
-          proxy |> addPolygons(data = data_sf, fillColor = "#66A3D2", color = "white", weight = 1, fillOpacity = 0.4, group = layer_key,popup=popup_general(data_sf))
+          proxy |> addPolygons(data = data_sf, fillColor = "#66A3D2", color = "black", weight = 1, fillOpacity = 0.4, group = layer_key,popup=popup_general(data_sf)|> as.character())
         } else if (geom_type %in% c("LINESTRING", "MULTILINESTRING")) {
-          proxy |> addPolylines(data = data_sf, color = "black", weight = 3, opacity = 0.8, group = layer_key,popup=popup_general(data_sf))
+          proxy |> addPolylines(data = data_sf, color = "black", weight = 3, opacity = 0.8, group = layer_key,popup=popup_general(data_sf)|> as.character())
         } else if (geom_type %in% c("POINT", "MULTIPOINT")) {
-          proxy |> addCircleMarkers(data = data_sf, radius = 6, color = "red", fillOpacity = 0.9, group = layer_key,popup=popup_general(data_sf))
+          proxy |> addCircleMarkers(data = data_sf, radius = 6, color = "red", fillOpacity = 0.9, group = layer_key,popup=popup_general(data_sf)|> as.character()) |> fitBounds()
         }
         
         successful_layers <- c(successful_layers, layer_key)
