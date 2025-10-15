@@ -443,11 +443,11 @@ server <- function(input, output, session) {
         #load_layer_data(layer_key)
         if (rv_config$CAPA_CONFIG_DATA[[layer_key]]$data |> is.null()) {
           print("Se lee desde el buig")
-          Sys.sleep(1)
-          data_sf <- load_layer_data(buig = buig,
-                                     nombre_buig =  config$nombre_buig,
-                                     columnas_interes = config$cols,
-                                     custom_filter = ifelse(config$custom_filter |> is.null(),'',config$custom_filter))###Aqui se ve a cambiar por la función custom de dplyr.
+          print(config$nombre_buig)
+          data_sf <-st_read(buig,config$nombre_buig) #load_layer_data(buig = buig,
+                      #               nombre_buig =  config$nombre_buig,
+                       #              columnas_interes = config$cols,
+                        #             custom_filter = ifelse(config$custom_filter |> is.null(),'',config$custom_filter))###Aqui se ve a cambiar por la función custom de dplyr.
           rv_config$CAPA_CONFIG_DATA[[layer_key]]$data <- data_sf
           
         } else {
