@@ -1,10 +1,10 @@
 
 # Obtener las variables de entorno para la conexión
-db_host <- Sys.getenv("DB_HOST")
-db_user <- Sys.getenv("DB_USER")
-db_pass <- Sys.getenv("DB_PASS")
-db_port <- as.numeric(Sys.getenv("DB_PORT")) # Asegúrate de convertir el puerto a numérico
-db_name <- Sys.getenv("DB_NAME")
+# db_host <- Sys.getenv("DB_HOST")
+# db_user <- Sys.getenv("DB_USER")
+# db_pass <- Sys.getenv("DB_PASS")
+# db_port <- as.numeric(Sys.getenv("DB_PORT")) # Asegúrate de convertir el puerto a numérico
+# db_name <- Sys.getenv("DB_NAME")
 
 ##Codigo para conectarnos a sql usando dplyr
 library(DBI)
