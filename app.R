@@ -14,55 +14,55 @@ CAPA_CONFIG <- list(
   # [tipo_geom, group_name, nombre_buig]
   
   ## Grupo 1: Desagregación geográfica
-  'g1_c1' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="limite_municipal_simple", cols=c("cvegeo", "nomgeo", "the_geom"), data = NULL,color = "black", size = 6, name = "Municipios"),  # Municipios
-  'g1_c2' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="agebs_simple", cols=c("cve_ent", "cve_mun", "cve_loc", "cve_ageb", "pob1", "geom"), data = NULL,color = "black", size = 6, name = "AGEB"),  # AGEB
-  'g1_c3' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_urb_simple", cols=c("nomgeo", "cabecera", "cve_mun", "cve_loc", "pob1", "geom"), data = NULL,color = "black", size = 6, name = "Localidad Urbana"),  # Localidad Urbana
-  'g1_c4' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_rur_simple", cols=c("nomgeo", "nom_ent", "pob1", "geom"), data = NULL),  # Localidad Rural
-  'g1_c5' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="regiones_simple", cols=c("region", "the_geom"), data = NULL),  # Regiones
+  'g1_c1' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="limite_municipal_simple", cols=c("cvegeo", "nomgeo", "the_geom"), data = NULL,color = "steelblue", size = 2, name = "Municipios"),  # Municipios
+  'g1_c2' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="agebs_simple", cols=c("cve_ent", "cve_mun", "cve_loc", "cve_ageb", "pob1", "geom"), data = NULL,color = "steelblue", size = 2, name = "AGEB"),  # AGEB
+  'g1_c3' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_urb_simple", cols=c("nomgeo", "cabecera", "cve_mun", "cve_loc", "pob1", "geom"), data = NULL,color = "#DED1A9", size = 2, name = "Localidad Urbana"),  # Localidad Urbana
+  'g1_c4' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_rur_simple", cols=c("nomgeo", "nom_ent", "pob1", "geom"), data = NULL,color = "#DE924B", size = 2),  # Localidad Rural
+  'g1_c5' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="regiones_simple", cols=c("region", "the_geom"), data = NULL,color = "#BAB9B6", size = 2),  # Regiones
   
   ## Grupo 2: Capas de Salud
-  'g2_c1' = list(tipo_geom="POINT", group="Infraestructura de Salud", nombre_buig='13salud', cols=c("nombre", "unidad", "admin","geom"), data = NULL), # Centros de Salud
-  'g2_c2' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_gral", cols=c("name", "area", "geom"), data = NULL),  # Hospital General
-  'g2_c3' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_reg", cols=c("name", "area", "geom"), data = NULL),  # Hospital regional
+  'g2_c1' = list(tipo_geom="POINT", group="Infraestructura de Salud", nombre_buig='13salud', cols=c("nombre", "unidad", "admin","geom"), data = NULL,color = "red", size = 2), # Centros de Salud
+  'g2_c2' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_gral", cols=c("name", "area", "geom"), data = NULL,color = "red", size = 15),  # Hospital General
+  'g2_c3' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_reg", cols=c("name", "area", "geom"), data = NULL,color = "red", size = 15),  # Hospital regional
   
   ## Grupo 3: Recursos Hídricos
-  'g3_c1' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="canales", cols=c("identifica", "condicion", "geom"), data = NULL),  # Canales
-  'g3_c2' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="Pozos_de_Estado_de_Hidalgo", cols=c("nombre","tipo", "geom"), data = NULL),  # Pozos
-  'g3_c3' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="rios", cols=c("nombre", "condicion", "st_length_", "geom"), data = NULL), # Ríos
-  'g3_c4' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="manantiales_50_inegi", cols=c("nom_man", "geom"), data = NULL),  # Manantiales
-  'g3_c5' = list(tipo_geom="POLYGON", group="Recursos Hídricos", nombre_buig="cuerpos_de_agua", cols=c("condicion", "shape_leng", "shape_area","geom"), data = NULL),  # Cuerpos de Agua
-  'g3_c6' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="Estructuras_elevadas", cols=c("geografico","tipo","geom"), data = NULL),  # Oficina
+  'g3_c1' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="canales", cols=c("identifica", "condicion", "geom"), data = NULL,color = "steelblue", size = 15),  # Canales
+  'g3_c2' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="Pozos_de_Estado_de_Hidalgo", cols=c("nombre","tipo", "geom"), data = NULL,color = "#00D9FA", size = 2),  # Pozos
+  'g3_c3' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="rios", cols=c("nombre", "condicion", "st_length_", "geom"), data = NULL,color = "steelblue", size = 2), # Ríos
+  'g3_c4' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="manantiales_50_inegi", cols=c("nom_man", "geom"), data = NULL,color = "#0003DB", size = 2),  # Manantiales
+  'g3_c5' = list(tipo_geom="POLYGON", group="Recursos Hídricos", nombre_buig="cuerpos_de_agua", cols=c("condicion", "shape_leng", "shape_area","geom"), data = NULL,color = "#0000FF", size = 3),  # Cuerpos de Agua
+  'g3_c6' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="Estructuras_elevadas", cols=c("geografico","tipo","geom"), data = NULL,color = "black", size = 1),  # Oficina
   
   ## Grupo 4: Zonificación de Vulnerabilidad
   # g4_c5 simula un error de carga para demostrar el manejo de excepciones.
-  'g4_c1' = list(tipo_geom="POLYGON", group="Zonificación de Vulnerabilidad", nombre_buig="peligro_por_caida_de_bloques", cols=c("tipo","geom"), data = NULL),  # Caida de bloques
-  'g4_c2' = list(tipo_geom="POLYGON", group="Zonificación de Vulnerabilidad", nombre_buig="zonificacion_de_vulnerabilidad_y_areas_susceptibles_a_deslizami", cols=c("tipo", "geom"), data = NULL),  # Suceptibles a deslizamiento
-  'g4_c3' = list(tipo_geom="POLYGON", group="Zonificación de Vulnerabilidad", nombre_buig="zonificacion_de_vulnerabilidad_y_areas_susceptibles_a_hundimien", cols=c("peligro", "geom"), data = NULL),  # Hundimiento
-  'g4_c4' = list(tipo_geom="LINESTRING", group="Zonificación de Vulnerabilidad", nombre_buig="estructuras_geologicas", cols=c("entidad", "geom"), data = NULL),  # Fallas geológicas
-  'g4_c5' = list(tipo_geom="POLYGON", group="Zonificación de Vulnerabilidad", nombre_buig="inundacion", cols=c("objectid", "geom"), data = NULL), # Zonas de Inundación
-  'g4_c6' = list(tipo_geom="POINT", group="Zonificación de Vulnerabilidad", nombre_buig="PRIORIDAD_ESCUELAS", cols=c('claveseph','Nombre_d_1','LOCALIDAD','MUNICIPIO','total', "geom"), data = NULL), # Escuelas en riesgo
+  'g4_c1' = list(tipo_geom="POLYGON", group="Zonificación de Vulnerabilidad", nombre_buig="peligro_por_caida_de_bloques", cols=c("tipo","geom"), data = NULL,color = "red", size = 3),  # Caida de bloques
+  'g4_c2' = list(tipo_geom="POLYGON", group="Zonificación de Vulnerabilidad", nombre_buig="zonificacion_de_vulnerabilidad_y_areas_susceptibles_a_deslizami", cols=c("tipo", "geom"), data = NULL,color = "red", size = 3),  # Suceptibles a deslizamiento
+  'g4_c3' = list(tipo_geom="POLYGON", group="Zonificación de Vulnerabilidad", nombre_buig="zonificacion_de_vulnerabilidad_y_areas_susceptibles_a_hundimien", cols=c("peligro", "geom"), data = NULL,color = "#A68F98", size = 3),  # Hundimiento
+  'g4_c4' = list(tipo_geom="LINESTRING", group="Zonificación de Vulnerabilidad", nombre_buig="estructuras_geologicas", cols=c("entidad", "geom"), data = NULL,color = "#52303C", size = 3),  # Fallas geológicas
+  'g4_c5' = list(tipo_geom="POLYGON", group="Zonificación de Vulnerabilidad", nombre_buig="inundacion", cols=c("objectid", "geom"), data = NULL,color = "steelblue", size = 3), # Zonas de Inundación
+  'g4_c6' = list(tipo_geom="POINT", group="Zonificación de Vulnerabilidad", nombre_buig="PRIORIDAD_ESCUELAS", cols=c('claveseph','Nombre_d_1','LOCALIDAD','MUNICIPIO','total', "geom"), data = NULL,color = "red", size = 3), # Escuelas en riesgo
   
   ## Grupo 5: Infraestructura Vial
   'g5_c1' = list(tipo_geom="POINT", group="Infraestructura Vial", nombre_buig="puentes_hgo", cols=c("tipo", "nombre", "altura", "ancho", "geom"), data = NULL),  # Estructuras Viales
-  'g5_c2' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_federal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter=c("administra",'Federal')), # Carreteras Federales
-  'g5_c3' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_estatal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Estatal'),  # Carreteras Estatales
-  'g5_c4' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_municipal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Municipal'),  # Carreteras Municipales
-
+  'g5_c2' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_federal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Federal',color = "black", size = 1), # Carreteras Federales
+  'g5_c3' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_estatal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Estatal',color = "black", size = 1),  # Carreteras Estatales
+  'g5_c4' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_municipal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Municipal',color = "black", size = 1),  # Carreteras Municipales
+  
   ## Grupo 6: Otra Infraestructura
-  'g6_c1' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="subestacion_electrica", cols=c("geografico", "nombre", "condicion",'geom'), data = NULL),  # Estaciones eléctricas
-  'g6_c2' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_nacionales", cols=c("nom_estab", "municipio","localidad", "geom"), data = NULL),  # Oficina
-  'g6_c3' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_estatales", cols=c("nom_estab", "geom"), data = NULL),  # Oficina
-  'g6_c4' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_municipales", cols=c("nom_estab", "municipio","localidad","geom"), data = NULL),  # Oficina
-  'g6_c5' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_regionales", cols=c("nom_estab", "municipio","localidad", "geom"), data = NULL),  # Oficina
+  'g6_c1' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="subestacion_electrica", cols=c("geografico", "nombre", "condicion",'geom'), data = NULL,color = "#BDAF35", size = 3),  # Estaciones eléctricas
+  'g6_c2' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_nacionales", cols=c("nom_estab", "municipio","localidad", "geom"), data = NULL,color = "#074721", size = 2),  # Oficina
+  'g6_c3' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_estatales", cols=c("nom_estab", "geom"), data = NULL,color = "#621132", size = 2),  # Oficina
+  'g6_c4' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_municipales", cols=c("nom_estab", "municipio","localidad","geom"), data = NULL,color = "#621132", size = 2),  # Oficina
+  'g6_c5' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="oficinas_regionales", cols=c("nom_estab", "municipio","localidad", "geom"), data = NULL,color = "#621132", size = 2),  # Oficina
   
   ## Grupo 7: Puntos de Reunión y Centros de Acopio
-  'g7_c1' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="centros_de_acopio", cols=c("nom_estab", "tipo", "geom"), data = NULL),  # Centros de Acopio
-  'g7_c2' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="albergues_y_refugios", cols=c("nom_mun", "colonia", "nombre", "registr", "anio", "ambito","geom"), data = NULL), # Albergues
-  'g7_c3' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="comedores_comunitarios_en_operacion", cols=c("tipo_educa", "nivel_educ", "nombre_d_4", "mun", "loc", "nom_plante", "nom_comedo", "geom"), data = NULL),  # Comedores Comunitarios
-  'g7_c4' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="escuelas_seph_2025", cols=c("nom_centro", "nom_turno", "tipo", "nivel_educ", "servicio_e", "nom_mun", "nom_loc", "colonia","geom"), data = NULL),  # Escuelas
-  'g7_c5' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="universidades_estatales", cols=c("name", "unv_inst", "geom"), data = NULL),  # Universidades Estatales
-  'g7_c6' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="caics_2024", cols=c("name", "popupinfo", "geom"), data = NULL) , # Centros de Atención Infantil Comunitaria (CAIC)
-  'g7_c7' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="tiendas_diconsa", cols=c("municipio", "localidad", 'direccion',"geom"), data = NULL)  # tiendas_diconsa
+  'g7_c1' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="centros_de_acopio", cols=c("nom_estab", "tipo", "geom"), data = NULL,color = "#AE8E5D", size = 2),  # Centros de Acopio
+  'g7_c2' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="albergues_y_refugios", cols=c("nom_mun", "colonia", "nombre", "registr", "anio", "ambito","geom"), data = NULL,color = "#AE8E5D", size = 2), # Albergues
+  'g7_c3' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="comedores_comunitarios_en_operacion", cols=c("tipo_educa", "nivel_educ", "nombre_d_4", "mun", "loc", "nom_plante", "nom_comedo", "geom"), data = NULL,color = "#621132", size = 2),  # Comedores Comunitarios
+  'g7_c4' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="escuelas_seph_2025", cols=c("nom_centro", "nom_turno", "tipo", "nivel_educ", "servicio_e", "nom_mun", "nom_loc", "colonia","geom"), data = NULL,color = "steelblue", size = 2),  # Escuelas
+  'g7_c5' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="universidades_estatales", cols=c("name", "unv_inst", "geom"), data = NULL,color = "#621132", size = 2),  # Universidades Estatales
+  'g7_c6' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="caics_2024", cols=c("name", "popupinfo", "geom"), data = NULL,color = "#621132", size = 2) , # Centros de Atención Infantil Comunitaria (CAIC)
+  'g7_c7' = list(tipo_geom="POINT", group="Puntos de Reunión y Centros de Acopio", nombre_buig="tiendas_diconsa", cols=c("municipio", "localidad", 'direccion',"geom"), data = NULL,color = "#621132", size = 2)  # tiendas_diconsa
 )
 CAPA_CONFIG[['g5_c1']]$custom_filter
 
@@ -92,15 +92,11 @@ load_layer_data =function(buig, nombre_buig = "Estructuras_elevadas", columnas_i
 }
 #load_layer_data(buig = buig,nombre_buig = "red_carretera_sipdus",columnas_interes =c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom") ,custom_filter = "Federal")
 layer_control_item <- function(layer_key, label_name) {
-  # El ID para la casilla de verificación será "gX_cY_chk"
   checkbox_id <- paste0(layer_key, "_chk")
-  # El ID para el botón de acción será "gX_cY_btn"
   button_id <- paste0(layer_key, "_btn")
   
   div(class = "d-flex justify-content-between align-items-center mb-2", 
-      # Casilla de verificación
       checkboxInput(checkbox_id, label_name, value = FALSE),
-      # Botón de configuración
       actionButton(button_id, label = NULL, icon = icon("gear"), 
                    class = "btn-xs btn-default", 
                    style = "padding: 5px; height: 30px;")
@@ -117,7 +113,7 @@ config_modal <- function(layer_key, layer_name, initial_color) {
       label = "Color de la Capa:",
       value = initial_color,
       palette = "square",
-      closeOnClick = TRUE
+      closeOnClick = TRUE,allowTransparent = T
     ),
     
     # Slider de Tamaño/Radio ###Pendiente. Deberá aplicarse a las fronteras de los poligonos o a los anchos de las lineas o a los radios de los circulos
@@ -145,11 +141,9 @@ popup_general = function(datos_sf = datos_sf) {
   }
   
   popup = apply(
-    # 🚨 CORRECCIÓN CLAVE: Usar drop = FALSE para mantener la estructura de data frame
     sf::st_drop_geometry(datos_sf)[, columnas, drop = FALSE], 
     1, # Aplicar por fila
     function(fila) {
-      # Nota: 'fila' será un vector, incluso si solo hay una columna
       campos =  paste0("<b>", columnas, ":</b> ", fila, collapse = "<br>")
       return(htmltools::HTML(campos))
     }
@@ -251,7 +245,7 @@ ui <- page_sidebar(
 server <- function(input, output, session) {
   #source("../../../Reutilizables/Postgres_BUIG/conexion_buig.R")
   
-  # 2. Cerrar la conexión cuando la sesión termina
+  #Cerrar la conexión cuando la sesión termina
   session$onSessionEnded(function() {
     if (DBI::dbIsValid(buig)) {
       DBI::dbDisconnect(buig)
@@ -270,7 +264,7 @@ server <- function(input, output, session) {
     capa_poi_g7 = paste0("g7_c", 1:7)
   )
   
-  # Función para encontrar el ID del input padre a partir del layer_key
+  #Función para encontrar el ID del input padre a partir del layer_key
   find_parent_input_id <- function(layer_key) {
     for (id in names(INPUT_TO_KEY_MAP)) {
       if (layer_key %in% INPUT_TO_KEY_MAP[[id]]) {
@@ -283,12 +277,8 @@ server <- function(input, output, session) {
   
   selected_layers_vector <- reactive({
     active_layers <- character(0)
-    
-    # ITERAMOS SOBRE TODOS LOS CHECKBOXES INDIVIDUALES (gX_cY_chk)
     for (layer_key in ALL_LAYER_KEYS) {
       checkbox_id <- paste0(layer_key, "_chk")
-      
-      # input[[checkbox_id]] es cómo se accede dinámicamente
       if (isTRUE(input[[checkbox_id]])) {
         active_layers <- c(active_layers, layer_key)
       }
@@ -326,11 +316,7 @@ server <- function(input, output, session) {
   ALL_BUTTON_INPUTS <- paste0(ALL_BUTTON_KEYS, "_btn") # Lista de IDs de input
   ALL_SAVE_BUTTONS=paste0("modal_",ALL_BUTTON_KEYS,"_save")
   #Igual g1_c2
-  observeEvent(input$modal_g1_c2_save, {
-    rv_map_params$g1_c2$color <- input$modal_g1_c2_col
-    rv_map_params$g1_c2$size <- input$modal_g1_c2_size
-    removeModal()
-  })
+
   rv_click_state <- reactiveValues()
   rv_save_state <- reactiveValues()
   
@@ -342,83 +328,64 @@ server <- function(input, output, session) {
     rv_save_state[[btn_id]] <- 0 
   }
   observeEvent({
-    # Escuchar a todos los botones dinámicamente
     sapply(ALL_BUTTON_INPUTS, function(id) input[[id]]) 
   }, {
     culprit_key <- NULL
     
-    # Iterar sobre todos los botones para encontrar el que aumentó su contador
     for (layer_key in ALL_BUTTON_KEYS) {
       btn_id <- paste0(layer_key, "_btn")
       
-      # El valor actual del contador de clics
       current_click_count <- input[[btn_id]]
       
-      # El valor anterior del contador de clics
       previous_click_count <- isolate(rv_click_state[[btn_id]])
       
-      # Si el contador aumentó en uno, este es el botón "culpable"
       if (current_click_count > previous_click_count) {
         culprit_key <- layer_key
         
-        # 🚨 Actualizar el estado anterior para el próximo ciclo
         rv_click_state[[btn_id]] <- current_click_count 
-        break # Encontramos al culpable, salimos del bucle
+        break 
       }
     }
     
-    # 3. Lógica principal con la clave identificada
     if (!is.null(culprit_key)) {
-      current_config <- isolate(rv_map_params[[culprit_key]])
-      
-      # Usar la clave dinámica aquí
+      current_config <- rv_config$CAPA_CONFIG_DATA[[culprit_key]]
+      print(current_config)
       showModal(config_modal(culprit_key, current_config$name, current_config$color))
       
-      # Actualizar los inputs del modal dinámicamente
       colourpicker::updateColourInput(session, paste0("modal_", culprit_key, "_col"), value = current_config$color)
       updateSliderInput(session, paste0("modal_", culprit_key, "_size"), value = current_config$size)
       
     }
   }, ignoreInit = TRUE)
   observeEvent({
-    # Escucha a todos los botones Save
     sapply(ALL_SAVE_BUTTONS, function(id) input[[id]])  
   }, {
     culprit_key <- NULL
     
-    # 1. Identificar qué botón Save fue presionado
     for (layer_key in ALL_BUTTON_KEYS) {
       
-      # 🚨 CORRECCIÓN 1: Definir el ID correcto del botón de Guardar
       save_btn_id <- paste0("modal_", layer_key, "_save") 
       
-      # 🚨 CORRECCIÓN 2: Usar ifelse para manejar el valor NULL inicial
-      # Si input[[ID]] es NULL, asumimos que el contador es 0 (no se ha presionado).
       current_save_count <- ifelse(is.null(input[[save_btn_id]]), 
                                    0, 
                                    input[[save_btn_id]])
       
       previous_save_count <- isolate(rv_save_state[[save_btn_id]])
       
-      # Ahora la comparación funciona, ya que current_save_count es 0, no NULL.
       if (current_save_count > previous_save_count) { 
         culprit_key <- layer_key
         
-        # Actualizamos el estado anterior con el valor que DISPARÓ el evento.
         rv_save_state[[save_btn_id]] <- current_save_count
         break
       }
     }
     
-    # 2. Ejecutar la lógica de guardar si se encontró al culpable
     if (!is.null(culprit_key)) {
       modal_col_id <- paste0("modal_", culprit_key, "_col")
       modal_size_id <- paste0("modal_", culprit_key, "_size")
       
-      # Es seguro acceder a estos inputs ya que el modal estaba abierto 
-      # (y por lo tanto estos inputs deben tener valores)
-      rv_map_params[[culprit_key]]$color <- input[[modal_col_id]]
-      rv_map_params[[culprit_key]]$size <- input[[modal_size_id]]
+      rv_config$CAPA_CONFIG_DATA[[culprit_key]]$color <- input[[modal_col_id]]
+      rv_config$CAPA_CONFIG_DATA[[culprit_key]]$size <- input[[modal_size_id]]
       
       removeModal()
       
@@ -433,7 +400,7 @@ server <- function(input, output, session) {
       geom_type <- as.character(unique(st_geometry_type(data_para_agregar)))[1]
 
       if (geom_type %in% c("POLYGON", "MULTIPOLYGON")) {
-        proxy |> addPolygons(data = data_para_agregar, fillColor =input[[modal_col_id]], color = "black",weight=input[[modal_size_id]], fillOpacity = 0.4, group = layer_key,popup=popup_general(data_para_agregar) |> as.character())
+        proxy |> addPolygons(data = data_para_agregar, fillColor =input[[modal_col_id]], color = input[[modal_col_id]],weight=input[[modal_size_id]], fillOpacity = 0.7, group = layer_key,popup=popup_general(data_para_agregar) |> as.character())
       } else if (geom_type %in% c("LINESTRING", "MULTILINESTRING")) {
         proxy |> addPolylines(data = data_para_agregar, color = input[[modal_col_id]],weight=input[[modal_size_id]], opacity = 0.8, group = layer_key,popup=popup_general(data_para_agregar)|> as.character())
       } else if (geom_type %in% c("POINT", "MULTIPOINT")) {
@@ -476,7 +443,6 @@ server <- function(input, output, session) {
           
         } else {
           print("Se lee desde local ")
-          Sys.sleep(1)
           data_sf <- rv_config$CAPA_CONFIG_DATA[[layer_key]]$data 
         }
         
@@ -484,11 +450,11 @@ server <- function(input, output, session) {
         
 
         if (geom_type %in% c("POLYGON", "MULTIPOLYGON")) {
-          proxy |> addPolygons(data = data_sf, fillColor = "#66A3D2", color = "black", weight = 1, fillOpacity = 0.4, group = layer_key,popup=popup_general(data_sf)|> as.character())
+          proxy |> addPolygons(data = data_sf, fillColor = rv_config$CAPA_CONFIG_DATA[[layer_key]]$color, color = "black", weight = rv_config$CAPA_CONFIG_DATA[[layer_key]]$size, fillOpacity = 0.7, group = layer_key,popup=popup_general(data_sf)|> as.character())
         } else if (geom_type %in% c("LINESTRING", "MULTILINESTRING")) {
-          proxy |> addPolylines(data = data_sf, color = "black", weight = 3, opacity = 0.8, group = layer_key,popup=popup_general(data_sf)|> as.character())
+          proxy |> addPolylines(data = data_sf, color = rv_config$CAPA_CONFIG_DATA[[layer_key]]$color, weight = rv_config$CAPA_CONFIG_DATA[[layer_key]]$size, opacity = 0.8, group = layer_key,popup=popup_general(data_sf)|> as.character())
         } else if (geom_type %in% c("POINT", "MULTIPOINT")) {
-          proxy |> addCircleMarkers(data = data_sf, radius = 6, color = "red", fillOpacity = 0.9, group = layer_key,popup=popup_general(data_sf)|> as.character())
+          proxy |> addCircleMarkers(data = data_sf, radius = rv_config$CAPA_CONFIG_DATA[[layer_key]]$size, color = rv_config$CAPA_CONFIG_DATA[[layer_key]]$color, fillOpacity = 0.9, group = layer_key,popup=popup_general(data_sf)|> as.character())
         }
         
         successful_layers <- c(successful_layers, layer_key)
