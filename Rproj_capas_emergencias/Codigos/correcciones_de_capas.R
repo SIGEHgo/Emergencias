@@ -50,3 +50,13 @@ escuelas_en_riesgo=st_read(buig,Lista_BUIG[[45]])
 escuelas_en_riesgo |> 
   dplyr::filter(total>mean(total)) |> dplyr::select(claveseph,Nombre_d_1,LOCALIDAD,MUNICIPIO,total,geom) |> 
   dplyr::rename(riesgo_prioridad=total) |> st_zm() |> st_write("../Inputs/PRIORIDAD_ESCUELAS.geojson",driver = "GeoJSON")
+
+
+
+##
+
+st_read("../Afectaciones_Metztitlan_puntos.shp")->metz_punto
+st_read("../Metztitlan_tramos_afectados.shp")->metz_linea
+
+metz_punto |> dplyr::select(Fecha_1,Calculo_da,Afectacion,Direccion,geometry) |> st_zm() |> st_write("../Inputs/afectaciones_metztitlan_puntos.geojson",driver="GeoJSON")
+metz_linea |> dplyr::select(Fecha,Calculo_da,Afectacion,Direccion,geometry) |> st_zm() |> st_write("../Inputs/afectaciones_metztitlan_lineas.geojson",driver="GeoJSON")

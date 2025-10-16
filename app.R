@@ -5,6 +5,7 @@
 library(shiny)
 library(bslib)
 library(leaflet) 
+library(leaflet.extras) 
 library(dplyr)
 library(sf) 
 library(shinybusy)
@@ -12,7 +13,9 @@ library(colourpicker)
 
 CAPA_CONFIG <- list(
   # [tipo_geom, group_name, nombre_buig]
-  
+  ## Grupo 0: Afectaciones registradas.
+  'g0_c1'=list(tipo_geom="POINT", group="Afectaciones registradas", nombre_buig="afectaciones_metztitlan_puntos", cols=c(""), data = NULL,color = "#A30C06", size = 5, name = "Afectaciones en puntos"),  # Municipios,
+  'g0_c2'=list(tipo_geom="LINESTRING", group="Afectaciones registradas", nombre_buig="afectaciones_metztitlan_lineas", cols=c(""), data = NULL,color = "#A30C06", size = 2, name = "Afectaciones en tramo"),  # Municipios,
   ## Grupo 1: Desagregación geográfica
   'g1_c1' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="limite_municipal_simple", cols=c("cvegeo", "nomgeo", "the_geom"), data = NULL,color = "steelblue", size = 2, name = "Municipios"),  # Municipios
   'g1_c2' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="agebs_simple", cols=c("cve_ent", "cve_mun", "cve_loc", "cve_ageb", "pob1", "geom"), data = NULL,color = "steelblue", size = 2, name = "AGEB"),  # AGEB
@@ -150,6 +153,53 @@ popup_general = function(datos_sf = datos_sf) {
   )
   return(popup)
 }
+base_pob_default=rbind(st_read("Inputs/loc_urb_simple.geojson"),st_read("Inputs/loc_rur_simple.geojson"))
+Calcular_Interseccion=function(poligono,base_pob){
+  
+  #poligono debe ser un sf de una sola entrada tipo POLYGON
+  #base_pob debe ser un sf que tenga una variable numerica de población llamada "pob1"
+  
+  base_pob$Area_Original=as.numeric(st_area(x = st_transform(base_pob,crs=32614)))
+  base_pob$Area_Original[base_pob$Area_Original==0]=1
+  Interseccion=st_intersection(x = base_pob,y = poligono)
+  Interseccion$Area_Nueva=as.numeric(st_area(x = st_transform(Interseccion,crs=32614)))
+  Interseccion$Area_Nueva[Interseccion$Area_Nueva==0]=1
+  Interseccion$POB_Proporcional=(Interseccion$Area_Nueva*Interseccion$pob1)/Interseccion$Area_Original
+  Interseccion$VIV_Proporcional=(Interseccion$Area_Nueva*Interseccion$viv1)/Interseccion$Area_Original
+  
+  return(Interseccion)
+}
+generar_poligono=function(input_usuario){
+      switch (input_usuario$geometry$feature_type,
+        'circle' = {
+          st_buffer(input_usuario$geometry$coordinates,input_usuario$properties$radius)
+        },
+        'polygon'={
+          Cordenadas <- input_usuario$geometry$coordinates[[1]]
+          #print(Cordenadas)
+          n=length(Cordenadas)
+          Aux=data.frame(matrix(ncol = 2,nrow = n))
+          for(i in 1:n){
+            Aux[i,1]=Cordenadas[[i]][[1]]
+            Aux[i,2]=Cordenadas[[i]][[2]]
+          }
+          Aux2=st_as_sf(Aux, coords = c("X1", "X2"), crs = 4326)
+          Poligono=sf::st_as_sf(st_cast(st_combine(Aux2),"POLYGON"))
+        },
+        'rectangle'={
+          Cordenadas <- input_usuario$geometry$coordinates[[1]]
+          #print(Cordenadas)
+          n=length(Cordenadas)
+          Aux=data.frame(matrix(ncol = 2,nrow = n))
+          for(i in 1:n){
+            Aux[i,1]=Cordenadas[[i]][[1]]
+            Aux[i,2]=Cordenadas[[i]][[2]]
+          }
+          Aux2=st_as_sf(Aux, coords = c("X1", "X2"), crs = 4326)
+          Poligono=sf::st_as_sf(st_cast(st_combine(Aux2),"POLYGON"))
+        }
+      )
+    }
 ui <- page_sidebar(
   title = "Explorador de Capas Geográficas de Emergencia",
   sidebar = sidebar(
@@ -160,76 +210,98 @@ ui <- page_sidebar(
       id = "acordeon_capas",
       multiple = TRUE, 
       
-      # G1: Desagregación geográfica
-      accordion_panel(title = "Desagregación geográfica", icon = icon("map"), 
-                      h5("Selecciona elementos:"),
-                      
-                      layer_control_item("g1_c1", "Municipios"),
-                      layer_control_item("g1_c2", "AGEB"),
-                      layer_control_item("g1_c3", "Localidad Urbana"),
-                      layer_control_item("g1_c4", "Localidad Rural"),
-                      layer_control_item("g1_c5", "Regiones")
-      ),
-      
-      # G2: Infraestructura de Salud
-      accordion_panel(title = "Infraestructura de Salud", icon = icon("hospital"), 
-                      h5("Selecciona elementos:"),
-                      layer_control_item("g2_c1", "Centros de Salud"),
-                      layer_control_item("g2_c2", "Hospital General"),
-                      layer_control_item("g2_c3", "Hospital Regional")
-      ),
-      
-      # G3: Recursos Hídricos y Cuencas
-      accordion_panel(title = "Recursos Hídricos", icon = icon("water"),
-                      h5("Selecciona elementos:"),
-                      layer_control_item("g3_c1", "Canales"),
-                      layer_control_item("g3_c2", "Pozos"),
-                      layer_control_item("g3_c3", "Ríos"),
-                      layer_control_item("g3_c4", "Manantiales"),
-                      layer_control_item("g3_c5", "Cuerpos de Agua"),
-                      layer_control_item("g3_c6", "Estructuras Elevadas"),
-      ),
-      
-      # G4: Zonificación de Vulnerabilidad
-      accordion_panel(title = "Zonificación de Vulnerabilidad", icon = icon("triangle-exclamation"), 
-                      h5("Selecciona elementos:"),
-                      layer_control_item("g4_c1", "Caída de bloques"),
-                      layer_control_item("g4_c2", "Susceptibles a deslizamiento"),
-                      layer_control_item("g4_c3", "Hundimiento"),
-                      layer_control_item("g4_c4", "Fallas geológicas"),
-                      layer_control_item("g4_c5", "Zonas de Inundación"),
-                      layer_control_item("g4_c6", "Escuelas prioritarias por riesgos")
-      ),
-      
-      # G5: Infraestructura Vial
-      accordion_panel(title = "Infraestructura Vial", icon = icon("road"),
-                      h5("Selecciona elementos:"),
-                      layer_control_item("g5_c1", "Puentes y Túneles"),
-                      layer_control_item("g5_c2", "Carreteras Federales"),
-                      layer_control_item("g5_c3", "Carreteras Estatales"),
-                      layer_control_item("g5_c4", "Carreteras Municipales")
-      ),
-      
-      # G6: Otra Infraestructura
-      accordion_panel(title = "Otra Infraestructura", icon = icon("building"),
-                      h5("Selecciona elementos:"),
-                      layer_control_item("g6_c1", "Estaciones eléctricas"),
-                      layer_control_item("g6_c2", "Oficinas Nacionales"),
-                      layer_control_item("g6_c3", "Oficinas Estatales"),
-                      layer_control_item("g6_c4", "Oficinas Municipales"),
-                      layer_control_item("g6_c5", "Oficinas Regionales")
+      # G0: Afectaciones Registradas (Nuevo grupo)
+      accordion_panel(
+        title = "Afectaciones registradas", 
+        icon = icon("bell"), # Icono de campana/alerta
+        h5("Selecciona elementos:"),
+        layer_control_item("g0_c1", "Metztitlán: Afectaciones registradas en puntos"),
+        layer_control_item("g0_c2", "Metztitlán: Afectaciones registradas en tramos")
       ),
       
       # G7: Puntos de Reunión y Centros de Acopio
-      accordion_panel(title = "Puntos de Reunión y Centros de Acopio", icon = icon("handshake"),
-                      h5("Selecciona elementos:"),
-                      layer_control_item("g7_c1", "Centros de Acopio"),
-                      layer_control_item("g7_c2", "Albergues"),
-                      layer_control_item("g7_c3", "Comedores Comunitarios"),
-                      layer_control_item("g7_c4", "Escuelas"),
-                      layer_control_item("g7_c5", "Universidades Estatales"),
-                      layer_control_item("g7_c6", "Centros de Atención Infantil Comunitaria (CAIC)"),
-                      layer_control_item("g7_c7", "Tiendas Diconsa")
+      accordion_panel(
+        title = "Puntos de Reunión y Centros de Acopio", 
+        icon = icon("people-group"), # Icono de grupo de personas/reunión
+        h5("Selecciona elementos:"),
+        layer_control_item("g7_c1", "Centros de Acopio"),
+        layer_control_item("g7_c2", "Albergues"),
+        layer_control_item("g7_c3", "Comedores Comunitarios"),
+        layer_control_item("g7_c4", "Escuelas"),
+        layer_control_item("g7_c5", "Universidades Estatales"),
+        layer_control_item("g7_c6", "Centros de Atención Infantil Comunitaria (CAIC)"),
+        layer_control_item("g7_c7", "Tiendas Diconsa")
+      ),
+      
+      # G4: Zonificación de Vulnerabilidad (Se movió a su posición correcta)
+      accordion_panel(
+        title = "Zonificación de Vulnerabilidad", 
+        icon = icon("land-mine-on"), # Icono que sugiere peligro/riesgo en el suelo
+        h5("Selecciona elementos:"),
+        layer_control_item("g4_c1", "Caída de bloques"),
+        layer_control_item("g4_c2", "Susceptibles a deslizamiento"),
+        layer_control_item("g4_c3", "Hundimiento"),
+        layer_control_item("g4_c4", "Fallas geológicas"),
+        layer_control_item("g4_c5", "Zonas de Inundación"),
+        layer_control_item("g4_c6", "Escuelas prioritarias por riesgos")
+      ),
+      
+      # G2: Infraestructura de Salud
+      accordion_panel(
+        title = "Infraestructura de Salud", 
+        icon = icon("briefcase-medical"), # Icono de maletín médico
+        h5("Selecciona elementos:"),
+        layer_control_item("g2_c1", "Centros de Salud"),
+        layer_control_item("g2_c2", "Hospital General"),
+        layer_control_item("g2_c3", "Hospital Regional")
+      ),
+      
+      # G3: Recursos Hídricos y Cuencas
+      accordion_panel(
+        title = "Recursos Hídricos", 
+        icon = icon("water"), # Icono de agua (correcto)
+        h5("Selecciona elementos:"),
+        layer_control_item("g3_c1", "Canales"),
+        layer_control_item("g3_c2", "Pozos"),
+        layer_control_item("g3_c3", "Ríos"),
+        layer_control_item("g3_c4", "Manantiales"),
+        layer_control_item("g3_c5", "Cuerpos de Agua"),
+        layer_control_item("g3_c6", "Estructuras Elevadas")
+      ),
+      
+      # G5: Infraestructura Vial
+      accordion_panel(
+        title = "Infraestructura Vial", 
+        icon = icon("road"), # Icono de carretera (correcto)
+        h5("Selecciona elementos:"),
+        layer_control_item("g5_c1", "Puentes y Túneles"),
+        layer_control_item("g5_c2", "Carreteras Federales"),
+        layer_control_item("g5_c3", "Carreteras Estatales"),
+        layer_control_item("g5_c4", "Carreteras Municipales")
+      ),
+      
+      # G6: Otra Infraestructura
+      accordion_panel(
+        title = "Otra Infraestructura", 
+        icon = icon("industry"), # Icono de industria/fábrica (más genérico)
+        h5("Selecciona elementos:"),
+        layer_control_item("g6_c1", "Estaciones eléctricas"),
+        layer_control_item("g6_c2", "Oficinas Nacionales"),
+        layer_control_item("g6_c3", "Oficinas Estatales"),
+        layer_control_item("g6_c4", "Oficinas Municipales"),
+        layer_control_item("g6_c5", "Oficinas Regionales")
+      ),
+      
+      # G1: Desagregación geográfica
+      accordion_panel(
+        title = "Desagregación geográfica", 
+        icon = icon("map-location-dot"), # Icono de mapa detallado
+        h5("Selecciona elementos:"),
+        layer_control_item("g1_c1", "Municipios"),
+        layer_control_item("g1_c2", "AGEB"),
+        layer_control_item("g1_c3", "Localidad Urbana"),
+        layer_control_item("g1_c4", "Localidad Rural"),
+        layer_control_item("g1_c5", "Regiones")
       )
     )
   ),
@@ -295,7 +367,32 @@ server <- function(input, output, session) {
       setView(lng = -98, lat = 20, zoom = 6) |>  
       addLayersControl(
         options = layersControlOptions(collapsed = FALSE)
-      ) #|> addDrawToolbar()
+      ) |> addDrawToolbar(
+        targetGroup = "Seleccion del usuario",
+        editOptions = editToolbarOptions(
+          selectedPathOptions = selectedPathOptions()
+        ),
+        circleMarkerOptions = F,polylineOptions = F,
+        toolbar = toolbarOptions(
+          actions = list(title = "Cancel drawing", text = "Cancelar selección"),
+          finish = list(title = "Finish drawing", text = "Terminar selección"),
+          undo = list(title = "Delete last point drawn", text = "Borrar último punto"),
+          buttons = list(polyline = "Draw a polyline", polygon = "Dibujar un Polígono", rectangle =
+                           "Dibujar un rectángulo", circle = "Dibujar un círculo", marker = "Dibujar un Marcador", circlemarker
+                         = "Draw a circlemarker")
+        ),
+        edittoolbar = edittoolbarOptions(
+          actions = list(save = list(title = "Save changes", text = "Guardar cambios"), cancel = list(title
+                                                                                           = "Cancel editing, discards all changes", text = "Cancelar"), clearAll = list(title =
+                                                                                                                                                                         "Clear all layers", text = "Borrar todas las capas")),
+          buttons = list(edit = "Editar Capas", editDisabled = "No hay capas para editar", remove =
+                           "Borrar Capas", removeDisabled = "No hay capas para borrar")
+        )
+      ) |> 
+      addLayersControl(
+        overlayGroups = c("Seleccion del usuario"),
+        options = layersControlOptions(collapsed = FALSE)
+      ) #|>addStyleEditor()
   })
   
   # Vector de capas seleccionadas 
@@ -306,11 +403,50 @@ server <- function(input, output, session) {
   # })
   
   
-  # observeEvent(input$mapa_principal_draw_new_feature, {##Pendiente hacer algo con el dibujo.
-  #   print("El usuario hizo un dibujito")
-  #   print(input$mapa_principal_draw_new_feature)
-  #   print(class(input$mapa_principal_draw_new_feature))
-  # })
+  observeEvent(input$mapa_principal_draw_new_feature, {
+    draw_input <- input$mapa_principal_draw_new_feature
+    print("El usuario hizo un dibujito")
+    #print(draw_input)
+    feature_type <- draw_input$properties$feature_type 
+    Poligono <- switch(feature_type,
+                       "marker" = NULL,
+                       "circle" = {
+                         geojsonsf::geojson_sf(jsonify::to_json(draw_input$geometry, unbox = T)) |> 
+                         sf::st_buffer( dist = draw_input$properties$radius)
+                       },
+                       "polygon" = {
+                         geojsonsf::geojson_sf(jsonify::to_json(draw_input$geometry, unbox = T))
+                       },
+                       "rectangle" = {
+                         geojsonsf::geojson_sf(jsonify::to_json(draw_input$geometry, unbox = T))
+                       },
+                       NULL
+    )
+    if (!is.null(Poligono)) {
+      Area_Delimitada <- Calcular_Interseccion(poligono = Poligono, base_pob = base_pob_default)
+      
+      poblacion_total_estimada <- sum(Area_Delimitada$POB_Proporcional, na.rm = TRUE)
+      viviendas_total_estimada <- sum(Area_Delimitada$VIV_Proporcional, na.rm = TRUE)
+      popup_content <- paste0(
+        "<strong>Población Estimada:</strong> ", 
+        format(round(poblacion_total_estimada, 0), big.mark = ","), " habitantes","<br>",
+        "<strong>Viviendas Estimadas:</strong> ", 
+        format(round(viviendas_total_estimada, 0), big.mark = ","), " viviendas"
+      )
+      
+      centroide_sf <- sf::st_centroid(Poligono)
+      coords <- sf::st_coordinates(centroide_sf)
+      
+      proxy <- leaflet::leafletProxy("mapa_principal")
+      proxy |> 
+        leaflet::addPopups(
+          lng = coords[1, "X"], # Longitud
+          lat = coords[1, "Y"], # Latitud
+          popup = popup_content,
+          options = leaflet::popupOptions(closeButton = TRUE,closeOnClick = F)
+        )
+    }
+  })
   rv_map_params <- rv_config
   ALL_BUTTON_KEYS <- names(CAPA_CONFIG)  # Lista de todas las capas
   ALL_BUTTON_INPUTS <- paste0(ALL_BUTTON_KEYS, "_btn") # Lista de IDs de input
