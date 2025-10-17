@@ -429,9 +429,10 @@ server <- function(input, output, session) {
       viviendas_total_estimada <- sum(Area_Delimitada$VIV_Proporcional, na.rm = TRUE)
       popup_content <- paste0(
         "<strong>Población Estimada:</strong> ", 
-        format(round(poblacion_total_estimada, 0), big.mark = ","), " habitantes","<br>",
-        "<strong>Viviendas Estimadas:</strong> ", 
-        format(round(viviendas_total_estimada, 0), big.mark = ","), " viviendas"
+        format(round(poblacion_total_estimada, 0), big.mark = ","), " habitantes"
+        # ,"<br>",
+        # "<strong>Viviendas Estimadas:</strong> ", 
+        # format(round(viviendas_total_estimada, 0), big.mark = ","), " viviendas"
       )
       
       centroide_sf <- sf::st_centroid(Poligono)
