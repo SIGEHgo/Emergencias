@@ -70,19 +70,23 @@ CAPA_CONFIG <- list(
 )
 CAPA_CONFIG[['g5_c1']]$custom_filter
 
-load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_interes = c("geografico", "tipo", "geom"), 
-                          columna_filtrar = "", custom_filter = "") {
+load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_interes = c("geografico", "tipo", "geom")) {
   
-  datos = dplyr::tbl(buig, nombre_buig) |> dplyr::select(all_of(columnas_interes))
-  if("the_geom"%in%columnas_interes){
-    datos=datos |> dplyr::rename(geom=the_geom)
+  if (is.null(columnas_interes) || length(columnas_interes) == 0 || columnas_interes == "") {
+    datos = dplyr::tbl(buig, nombre_buig)
+  } else {
+    datos = dplyr::tbl(buig, nombre_buig) |> dplyr::select(all_of(columnas_interes))
   }
   
-  if (columna_filtrar != "" && custom_filter != "") {
-    #datos = datos |> dplyr::filter(!!dplyr::sym(columna_filtrar) == custom_filter)
-    datos = datos |> dplyr::filter(grepl(custom_filter, !!dplyr::sym(columna_filtrar)))
-  }
   
+  if ("the_geom" %in% columnas_interes) {
+    datos = datos |> 
+      dplyr::rename(geom = the_geom)
+  } else if ("geometry" %in% columnas_interes) {
+    datos = datos |> 
+      dplyr::rename(geom = geometry)
+  }
+
   datos = datos |> dplyr::collect() |> dplyr::mutate(geom = sf::st_as_sfc(geom, EWKB = TRUE))
   
   coordenadas = sf::st_coordinates(datos$geom[1])[1,1]
@@ -94,6 +98,7 @@ load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_
   
   return(datos)
 }
+
 #load_layer_data(buig = buig,nombre_buig = "red_carretera_sipdus",columnas_interes =c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom") ,custom_filter = "Federal")
 layer_control_item <- function(layer_key, label_name) {
   checkbox_id <- paste0(layer_key, "_chk")
