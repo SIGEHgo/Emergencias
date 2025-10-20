@@ -78,8 +78,7 @@ load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_
     datos = dplyr::tbl(buig, nombre_buig) |> dplyr::select(all_of(columnas_interes))
   }
   
-  cat("Se realizo la conexion correcta", nombre_buig, "Vamos a ver datos:", "\n")
-  print(datos)
+
   
   if ("the_geom" %in% columnas_interes) {
     datos = datos |> 
@@ -87,7 +86,10 @@ load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_
   } else if ("geometry" %in% columnas_interes) {
     datos = datos |> 
       dplyr::rename(geom = geometry)
-  }
+  }  
+  
+  cat("Se realizo la conexion correcta", nombre_buig, "Vamos a ver datos:", "\n")
+  print(datos)
 
   datos = datos |> dplyr::collect() |> dplyr::mutate(geom = sf::st_as_sfc(geom, EWKB = TRUE))
   
