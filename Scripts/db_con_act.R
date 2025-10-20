@@ -3,12 +3,12 @@ library(dbplyr)
 library(shiny)
 library(dplyr)
 
-# Obtener las variables de entorno para la conexión
-# db_host <- Sys.getenv("db_host")
-# db_user <- Sys.getenv("db_user")
-# db_pass <- Sys.getenv("db_pass")
-# db_port <- as.numeric(Sys.getenv("db_port")) # Asegúrate de convertir el puerto a numérico
-# db_name <- Sys.getenv("db_name")
+Obtener las variables de entorno para la conexión
+db_host <- Sys.getenv("db_host")
+db_user <- Sys.getenv("db_user")
+db_pass <- Sys.getenv("db_pass")
+db_port <- as.numeric(Sys.getenv("db_port")) # Asegúrate de convertir el puerto a numérico
+db_name <- Sys.getenv("db_name")
 
 buig <- pool::dbPool(
   drv = RPostgres::Postgres(),
