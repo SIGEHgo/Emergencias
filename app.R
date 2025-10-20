@@ -72,7 +72,7 @@ CAPA_CONFIG[['g5_c1']]$custom_filter
 
 load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_interes = c("geografico", "tipo", "geom")) {
   
-  if (is.null(columnas_interes) || length(columnas_interes) == 0 || columnas_interes == "") {
+  if (is.null(columnas_interes) || length(columnas_interes) == 0 || any(columnas_interes == "")) {
     datos = dplyr::tbl(buig, nombre_buig)
   } else {
     datos = dplyr::tbl(buig, nombre_buig) |> dplyr::select(all_of(columnas_interes))
