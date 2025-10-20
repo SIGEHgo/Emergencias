@@ -10,6 +10,7 @@ library(dplyr)
 library(sf) 
 library(shinybusy)
 library(colourpicker)
+library(pool)
 
 CAPA_CONFIG <- list(
   # [tipo_geom, group_name, nombre_buig]
@@ -17,23 +18,23 @@ CAPA_CONFIG <- list(
   'g0_c1'=list(tipo_geom="POINT", group="Afectaciones registradas", nombre_buig="afectaciones_metztitlan_puntos", cols=c(""), data = NULL,color = "#A30C06", size = 5, name = "Afectaciones en puntos"),  # Municipios,
   'g0_c2'=list(tipo_geom="LINESTRING", group="Afectaciones registradas", nombre_buig="afectaciones_metztitlan_lineas", cols=c(""), data = NULL,color = "#A30C06", size = 2, name = "Afectaciones en tramo"),  # Municipios,
   ## Grupo 1: Desagregación geográfica
-  'g1_c1' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="limite_municipal_simple", cols=c("cvegeo", "nomgeo", "the_geom"), data = NULL,color = "steelblue", size = 2, name = "Municipios"),  # Municipios
-  'g1_c2' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="agebs_simple", cols=c("cve_ent", "cve_mun", "cve_loc", "cve_ageb", "pob1", "geom"), data = NULL,color = "steelblue", size = 2, name = "AGEB"),  # AGEB
-  'g1_c3' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_urb_simple", cols=c("nomgeo", "cabecera", "cve_mun", "cve_loc", "pob1", "geom"), data = NULL,color = "#DED1A9", size = 2, name = "Localidad Urbana"),  # Localidad Urbana
-  'g1_c4' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_rur_simple", cols=c("nomgeo", "nom_ent", "pob1", "geom"), data = NULL,color = "#DE924B", size = 2),  # Localidad Rural
-  'g1_c5' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="regiones_simple", cols=c("region", "the_geom"), data = NULL,color = "#BAB9B6", size = 2),  # Regiones
+  'g1_c1' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="limite_municipal_simple", cols=c(""), data = NULL,color = "steelblue", size = 2, name = "Municipios"),  # Municipios
+  'g1_c2' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="agebs_simple", cols=c(""), data = NULL,color = "steelblue", size = 2, name = "AGEB"),  # AGEB
+  'g1_c3' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_urb_simple", cols=c(""), data = NULL,color = "#DED1A9", size = 2, name = "Localidad Urbana"),  # Localidad Urbana
+  'g1_c4' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_rur_simple", cols=c(""), data = NULL,color = "#DE924B", size = 2),  # Localidad Rural
+  'g1_c5' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="regiones_simple", cols=c(""), data = NULL,color = "#BAB9B6", size = 2),  # Regiones
   
   ## Grupo 2: Capas de Salud
   'g2_c1' = list(tipo_geom="POINT", group="Infraestructura de Salud", nombre_buig='13salud', cols=c("nombre", "unidad", "admin","geom"), data = NULL,color = "red", size = 2), # Centros de Salud
-  'g2_c2' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_gral", cols=c("name", "area", "geom"), data = NULL,color = "red", size = 15),  # Hospital General
-  'g2_c3' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_reg", cols=c("name", "area", "geom"), data = NULL,color = "red", size = 15),  # Hospital regional
+  'g2_c2' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_gral", cols=c(""), data = NULL,color = "red", size = 15),  # Hospital General
+  'g2_c3' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_reg", cols=c(""), data = NULL,color = "red", size = 15),  # Hospital regional
   
   ## Grupo 3: Recursos Hídricos
   'g3_c1' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="canales", cols=c("identifica", "condicion", "geom"), data = NULL,color = "steelblue", size = 15),  # Canales
   'g3_c2' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="Pozos_de_Estado_de_Hidalgo", cols=c("nombre","tipo", "geom"), data = NULL,color = "#00D9FA", size = 2),  # Pozos
   'g3_c3' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="rios", cols=c("nombre", "condicion", "st_length_", "geom"), data = NULL,color = "steelblue", size = 2), # Ríos
   'g3_c4' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="manantiales_50_inegi", cols=c("nom_man", "geom"), data = NULL,color = "#0003DB", size = 2),  # Manantiales
-  'g3_c5' = list(tipo_geom="POLYGON", group="Recursos Hídricos", nombre_buig="cuerpos_de_agua", cols=c("condicion", "shape_leng", "shape_area","geom"), data = NULL,color = "#0000FF", size = 3),  # Cuerpos de Agua
+  'g3_c5' = list(tipo_geom="POLYGON", group="Recursos Hídricos", nombre_buig="cuerpos_de_agua", cols=c(""), data = NULL,color = "#0000FF", size = 3),  # Cuerpos de Agua
   'g3_c6' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="Estructuras_elevadas", cols=c("geografico","tipo","geom"), data = NULL,color = "black", size = 1),  # Oficina
   
   ## Grupo 4: Zonificación de Vulnerabilidad
@@ -46,10 +47,10 @@ CAPA_CONFIG <- list(
   'g4_c6' = list(tipo_geom="POINT", group="Zonificación de Vulnerabilidad", nombre_buig="PRIORIDAD_ESCUELAS", cols=c('claveseph','Nombre_d_1','LOCALIDAD','MUNICIPIO','total', "geom"), data = NULL,color = "red", size = 3), # Escuelas en riesgo
   
   ## Grupo 5: Infraestructura Vial
-  'g5_c1' = list(tipo_geom="POINT", group="Infraestructura Vial", nombre_buig="puentes_hgo", cols=c("tipo", "nombre", "altura", "ancho", "geom"), data = NULL),  # Estructuras Viales
-  'g5_c2' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_federal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Federal',color = "black", size = 1), # Carreteras Federales
-  'g5_c3' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_estatal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Estatal',color = "black", size = 1),  # Carreteras Estatales
-  'g5_c4' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_municipal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Municipal',color = "black", size = 1),  # Carreteras Municipales
+  'g5_c1' = list(tipo_geom="POINT", group="Infraestructura Vial", nombre_buig="puentes_hgo", cols=c(""), data = NULL),  # Estructuras Viales
+  'g5_c2' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_federal", cols=c(""), data = NULL,custom_filter='Federal',color = "black", size = 1), # Carreteras Federales
+  'g5_c3' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_estatal", cols=c(""), data = NULL,custom_filter='Estatal',color = "black", size = 1),  # Carreteras Estatales
+  'g5_c4' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_municipal", cols=c(""), data = NULL,custom_filter='Municipal',color = "black", size = 1),  # Carreteras Municipales
   
   ## Grupo 6: Otra Infraestructura
   'g6_c1' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="subestacion_electrica", cols=c("geografico", "nombre", "condicion",'geom'), data = NULL,color = "#BDAF35", size = 3),  # Estaciones eléctricas
@@ -69,19 +70,27 @@ CAPA_CONFIG <- list(
 )
 CAPA_CONFIG[['g5_c1']]$custom_filter
 
-load_layer_data =function(buig, nombre_buig = "Estructuras_elevadas", columnas_interes = c("geografico", "tipo", "geom"), 
-                          columna_filtrar = "", custom_filter = "") {
+load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_interes = c("geografico", "tipo", "geom")) {
   
-  datos = dplyr::tbl(buig, nombre_buig) |> dplyr::select(all_of(columnas_interes))
-  if("the_geom"%in%columnas_interes){
-    datos=datos |> dplyr::rename(geom=the_geom)
+  if (is.null(columnas_interes) || length(columnas_interes) == 0 || any(columnas_interes == "")) {
+    datos = dplyr::tbl(buig, nombre_buig)
+  } else {
+    datos = dplyr::tbl(buig, nombre_buig) |> dplyr::select(all_of(columnas_interes))
   }
   
-  if (columna_filtrar != "" && custom_filter != "") {
-    #datos = datos |> dplyr::filter(!!dplyr::sym(columna_filtrar) == custom_filter)
-    datos = datos |> dplyr::filter(grepl(custom_filter, !!dplyr::sym(columna_filtrar)))
-  }
+  columnas = dplyr::tbl_vars(datos)
   
+  if ("the_geom" %in% columnas) {
+    datos = datos |> 
+      dplyr::rename(geom = the_geom)
+  } else if ("geometry" %in% columnas) {
+    datos = datos |> 
+      dplyr::rename(geom = geometry)
+  }  
+  
+  cat("Se realizo la conexion correcta", nombre_buig, "Vamos a ver datos:", "\n")
+  print(datos)
+
   datos = datos |> dplyr::collect() |> dplyr::mutate(geom = sf::st_as_sfc(geom, EWKB = TRUE))
   
   coordenadas = sf::st_coordinates(datos$geom[1])[1,1]
@@ -91,8 +100,9 @@ load_layer_data =function(buig, nombre_buig = "Estructuras_elevadas", columnas_i
     datos = datos |> sf::st_as_sf(crs = 4326) |> sf::st_zm()
   }
   
-  return(datos)
+  return(datos |> dplyr::filter(!st_is_empty(geom)))
 }
+
 #load_layer_data(buig = buig,nombre_buig = "red_carretera_sipdus",columnas_interes =c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom") ,custom_filter = "Federal")
 layer_control_item <- function(layer_key, label_name) {
   checkbox_id <- paste0(layer_key, "_chk")
@@ -312,18 +322,12 @@ ui <- page_sidebar(
     add_busy_spinner(spin = "fading-circle",position = "bottom-right",margins = c("5vh","5vw"))
   )
 )
-#source("Scripts/db_con.R")
+source("Scripts/db_con_act.R")
 
 server <- function(input, output, session) {
   #source("../../../Reutilizables/Postgres_BUIG/conexion_buig.R")
   
-  #Cerrar la conexión cuando la sesión termina
-  session$onSessionEnded(function() {
-    if (DBI::dbIsValid(buig)) {
-      DBI::dbDisconnect(buig)
-      message("Conexión a PostgreSQL cerrada exitosamente.")
-    }
-  })
+
   rv_config <- reactiveValues(CAPA_CONFIG_DATA = CAPA_CONFIG)
 
   INPUT_TO_KEY_MAP <- list(
@@ -566,16 +570,15 @@ server <- function(input, output, session) {
     for (layer_key in layers_to_add) {
       #print(rv_config$CAPA_CONFIG_DATA[[layer_key]])
       config <- rv_config$CAPA_CONFIG_DATA[[layer_key]] 
+      cat("Estamos imprimiendo config")
+      print(config)
       if (is.null(config)) next 
       tryCatch({
         #load_layer_data(layer_key)
         if (rv_config$CAPA_CONFIG_DATA[[layer_key]]$data |> is.null()) {
           print("Se lee desde el buig")
           print(config$nombre_buig)
-          data_sf <-st_read(paste0("Inputs/",config$nombre_buig,".geojson")) |> dplyr::filter(!st_is_empty(geometry)) #load_layer_data(buig = buig,
-                      #               nombre_buig =  config$nombre_buig,
-                       #              columnas_interes = config$cols,
-                        #             custom_filter = ifelse(config$custom_filter |> is.null(),'',config$custom_filter))###Aqui se ve a cambiar por la función custom de dplyr.
+          data_sf = load_layer_data(buig = buig, nombre_buig = config$nombre_buig, columnas_interes = config$cols)
           rv_config$CAPA_CONFIG_DATA[[layer_key]]$data <- data_sf
           
         } else {
