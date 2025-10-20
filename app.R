@@ -78,6 +78,8 @@ load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_
     datos = dplyr::tbl(buig, nombre_buig) |> dplyr::select(all_of(columnas_interes))
   }
   
+  cat("Se realizo la conexion correcta", nombre_buig, "Vamos a ver datos:", "\n")
+  print(datos)
   
   if ("the_geom" %in% columnas_interes) {
     datos = datos |> 
@@ -574,12 +576,7 @@ server <- function(input, output, session) {
         if (rv_config$CAPA_CONFIG_DATA[[layer_key]]$data |> is.null()) {
           print("Se lee desde el buig")
           print(config$nombre_buig)
-          #data_sf <- load_layer_data(buig = buig, nombre_buig = config$nombre_buig, columnas_interes = )
           data_sf = load_layer_data(buig = buig, nombre_buig = config$nombre_buig, columnas_interes = config$cols)
-          #data_sf <-st_read(paste0("Inputs/",config$nombre_buig,".geojson")) |> dplyr::filter(!st_is_empty(geometry)) #load_layer_data(buig = buig,
-                      #               nombre_buig =  config$nombre_buig,
-                       #              columnas_interes = config$cols,
-                        #             custom_filter = ifelse(config$custom_filter |> is.null(),'',config$custom_filter))###Aqui se ve a cambiar por la función custom de dplyr.
           rv_config$CAPA_CONFIG_DATA[[layer_key]]$data <- data_sf
           
         } else {
