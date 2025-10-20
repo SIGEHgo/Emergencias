@@ -10,6 +10,7 @@ library(dplyr)
 library(sf) 
 library(shinybusy)
 library(colourpicker)
+library(pool)
 
 CAPA_CONFIG <- list(
   # [tipo_geom, group_name, nombre_buig]
@@ -69,7 +70,7 @@ CAPA_CONFIG <- list(
 )
 CAPA_CONFIG[['g5_c1']]$custom_filter
 
-load_layer_data =function(buig, nombre_buig = "Estructuras_elevadas", columnas_interes = c("geografico", "tipo", "geom"), 
+load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_interes = c("geografico", "tipo", "geom"), 
                           columna_filtrar = "", custom_filter = "") {
   
   datos = dplyr::tbl(buig, nombre_buig) |> dplyr::select(all_of(columnas_interes))
@@ -312,18 +313,12 @@ ui <- page_sidebar(
     add_busy_spinner(spin = "fading-circle",position = "bottom-right",margins = c("5vh","5vw"))
   )
 )
-#source("Scripts/db_con.R")
+source("Scripts/db_con_act.R")
 
 server <- function(input, output, session) {
   #source("../../../Reutilizables/Postgres_BUIG/conexion_buig.R")
   
-  #Cerrar la conexión cuando la sesión termina
-  session$onSessionEnded(function() {
-    if (DBI::dbIsValid(buig)) {
-      DBI::dbDisconnect(buig)
-      message("Conexión a PostgreSQL cerrada exitosamente.")
-    }
-  })
+
   rv_config <- reactiveValues(CAPA_CONFIG_DATA = CAPA_CONFIG)
 
   INPUT_TO_KEY_MAP <- list(
@@ -566,13 +561,17 @@ server <- function(input, output, session) {
     for (layer_key in layers_to_add) {
       #print(rv_config$CAPA_CONFIG_DATA[[layer_key]])
       config <- rv_config$CAPA_CONFIG_DATA[[layer_key]] 
+      cat("Estamos imprimiendo config")
+      print(config)
       if (is.null(config)) next 
       tryCatch({
         #load_layer_data(layer_key)
         if (rv_config$CAPA_CONFIG_DATA[[layer_key]]$data |> is.null()) {
           print("Se lee desde el buig")
           print(config$nombre_buig)
-          data_sf <-st_read(paste0("Inputs/",config$nombre_buig,".geojson")) |> dplyr::filter(!st_is_empty(geometry)) #load_layer_data(buig = buig,
+          #data_sf <- load_layer_data(buig = buig, nombre_buig = config$nombre_buig, columnas_interes = )
+          data_sf = read_sf(buig, config$nombre_buig)
+          #data_sf <-st_read(paste0("Inputs/",config$nombre_buig,".geojson")) |> dplyr::filter(!st_is_empty(geometry)) #load_layer_data(buig = buig,
                       #               nombre_buig =  config$nombre_buig,
                        #              columnas_interes = config$cols,
                         #             custom_filter = ifelse(config$custom_filter |> is.null(),'',config$custom_filter))###Aqui se ve a cambiar por la función custom de dplyr.
