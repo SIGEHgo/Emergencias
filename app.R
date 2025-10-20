@@ -78,12 +78,12 @@ load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_
     datos = dplyr::tbl(buig, nombre_buig) |> dplyr::select(all_of(columnas_interes))
   }
   
-
+  columnas = dplyr::tbl_vars(datos)
   
-  if ("the_geom" %in% columnas_interes) {
+  if ("the_geom" %in% columnas) {
     datos = datos |> 
       dplyr::rename(geom = the_geom)
-  } else if ("geometry" %in% columnas_interes) {
+  } else if ("geometry" %in% columnas) {
     datos = datos |> 
       dplyr::rename(geom = geometry)
   }  
