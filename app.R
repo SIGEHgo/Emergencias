@@ -96,7 +96,7 @@ load_layer_data = function(buig, nombre_buig = "Estructuras_elevadas", columnas_
     datos = datos |> sf::st_as_sf(crs = 4326) |> sf::st_zm()
   }
   
-  return(datos)
+  return(datos |> dplyr::filter(!st_is_empty(geom)))
 }
 
 #load_layer_data(buig = buig,nombre_buig = "red_carretera_sipdus",columnas_interes =c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom") ,custom_filter = "Federal")
