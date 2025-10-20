@@ -575,7 +575,7 @@ server <- function(input, output, session) {
           print("Se lee desde el buig")
           print(config$nombre_buig)
           #data_sf <- load_layer_data(buig = buig, nombre_buig = config$nombre_buig, columnas_interes = )
-          data_sf = read_sf(buig, config$nombre_buig)
+          data_sf = load_layer_data(buig = buig, nombre_buig = config$nombre_buig, columnas_interes = config$cols)
           #data_sf <-st_read(paste0("Inputs/",config$nombre_buig,".geojson")) |> dplyr::filter(!st_is_empty(geometry)) #load_layer_data(buig = buig,
                       #               nombre_buig =  config$nombre_buig,
                        #              columnas_interes = config$cols,
