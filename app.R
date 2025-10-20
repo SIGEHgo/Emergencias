@@ -18,23 +18,23 @@ CAPA_CONFIG <- list(
   'g0_c1'=list(tipo_geom="POINT", group="Afectaciones registradas", nombre_buig="afectaciones_metztitlan_puntos", cols=c(""), data = NULL,color = "#A30C06", size = 5, name = "Afectaciones en puntos"),  # Municipios,
   'g0_c2'=list(tipo_geom="LINESTRING", group="Afectaciones registradas", nombre_buig="afectaciones_metztitlan_lineas", cols=c(""), data = NULL,color = "#A30C06", size = 2, name = "Afectaciones en tramo"),  # Municipios,
   ## Grupo 1: Desagregación geográfica
-  'g1_c1' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="limite_municipal_simple", cols=c("cvegeo", "nomgeo", "the_geom"), data = NULL,color = "steelblue", size = 2, name = "Municipios"),  # Municipios
-  'g1_c2' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="agebs_simple", cols=c("cve_ent", "cve_mun", "cve_loc", "cve_ageb", "pob1", "geom"), data = NULL,color = "steelblue", size = 2, name = "AGEB"),  # AGEB
-  'g1_c3' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_urb_simple", cols=c("nomgeo", "cabecera", "cve_mun", "cve_loc", "pob1", "geom"), data = NULL,color = "#DED1A9", size = 2, name = "Localidad Urbana"),  # Localidad Urbana
-  'g1_c4' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_rur_simple", cols=c("nomgeo", "nom_ent", "pob1", "geom"), data = NULL,color = "#DE924B", size = 2),  # Localidad Rural
-  'g1_c5' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="regiones_simple", cols=c("region", "the_geom"), data = NULL,color = "#BAB9B6", size = 2),  # Regiones
+  'g1_c1' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="limite_municipal_simple", cols=c(""), data = NULL,color = "steelblue", size = 2, name = "Municipios"),  # Municipios
+  'g1_c2' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="agebs_simple", cols=c(""), data = NULL,color = "steelblue", size = 2, name = "AGEB"),  # AGEB
+  'g1_c3' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_urb_simple", cols=c(""), data = NULL,color = "#DED1A9", size = 2, name = "Localidad Urbana"),  # Localidad Urbana
+  'g1_c4' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="loc_rur_simple", cols=c(""), data = NULL,color = "#DE924B", size = 2),  # Localidad Rural
+  'g1_c5' = list(tipo_geom="POLYGON", group="Desagregación geográfica", nombre_buig="regiones_simple", cols=c(""), data = NULL,color = "#BAB9B6", size = 2),  # Regiones
   
   ## Grupo 2: Capas de Salud
   'g2_c1' = list(tipo_geom="POINT", group="Infraestructura de Salud", nombre_buig='13salud', cols=c("nombre", "unidad", "admin","geom"), data = NULL,color = "red", size = 2), # Centros de Salud
-  'g2_c2' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_gral", cols=c("name", "area", "geom"), data = NULL,color = "red", size = 15),  # Hospital General
-  'g2_c3' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_reg", cols=c("name", "area", "geom"), data = NULL,color = "red", size = 15),  # Hospital regional
+  'g2_c2' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_gral", cols=c(""), data = NULL,color = "red", size = 15),  # Hospital General
+  'g2_c3' = list(tipo_geom="POLYGON", group="Infraestructura de Salud", nombre_buig="hospitales_hgo_reg", cols=c(""), data = NULL,color = "red", size = 15),  # Hospital regional
   
   ## Grupo 3: Recursos Hídricos
   'g3_c1' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="canales", cols=c("identifica", "condicion", "geom"), data = NULL,color = "steelblue", size = 15),  # Canales
   'g3_c2' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="Pozos_de_Estado_de_Hidalgo", cols=c("nombre","tipo", "geom"), data = NULL,color = "#00D9FA", size = 2),  # Pozos
   'g3_c3' = list(tipo_geom="LINESTRING", group="Recursos Hídricos", nombre_buig="rios", cols=c("nombre", "condicion", "st_length_", "geom"), data = NULL,color = "steelblue", size = 2), # Ríos
   'g3_c4' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="manantiales_50_inegi", cols=c("nom_man", "geom"), data = NULL,color = "#0003DB", size = 2),  # Manantiales
-  'g3_c5' = list(tipo_geom="POLYGON", group="Recursos Hídricos", nombre_buig="cuerpos_de_agua", cols=c("condicion", "shape_leng", "shape_area","geom"), data = NULL,color = "#0000FF", size = 3),  # Cuerpos de Agua
+  'g3_c5' = list(tipo_geom="POLYGON", group="Recursos Hídricos", nombre_buig="cuerpos_de_agua", cols=c(""), data = NULL,color = "#0000FF", size = 3),  # Cuerpos de Agua
   'g3_c6' = list(tipo_geom="POINT", group="Recursos Hídricos", nombre_buig="Estructuras_elevadas", cols=c("geografico","tipo","geom"), data = NULL,color = "black", size = 1),  # Oficina
   
   ## Grupo 4: Zonificación de Vulnerabilidad
@@ -47,10 +47,10 @@ CAPA_CONFIG <- list(
   'g4_c6' = list(tipo_geom="POINT", group="Zonificación de Vulnerabilidad", nombre_buig="PRIORIDAD_ESCUELAS", cols=c('claveseph','Nombre_d_1','LOCALIDAD','MUNICIPIO','total', "geom"), data = NULL,color = "red", size = 3), # Escuelas en riesgo
   
   ## Grupo 5: Infraestructura Vial
-  'g5_c1' = list(tipo_geom="POINT", group="Infraestructura Vial", nombre_buig="puentes_hgo", cols=c("tipo", "nombre", "altura", "ancho", "geom"), data = NULL),  # Estructuras Viales
-  'g5_c2' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_federal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Federal',color = "black", size = 1), # Carreteras Federales
-  'g5_c3' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_estatal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Estatal',color = "black", size = 1),  # Carreteras Estatales
-  'g5_c4' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_municipal", cols=c("administra", "nombre", "cond_pav", "recubri", "carriles", "circula", "velocidad","geom"), data = NULL,custom_filter='Municipal',color = "black", size = 1),  # Carreteras Municipales
+  'g5_c1' = list(tipo_geom="POINT", group="Infraestructura Vial", nombre_buig="puentes_hgo", cols=c(""), data = NULL),  # Estructuras Viales
+  'g5_c2' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_federal", cols=c(""), data = NULL,custom_filter='Federal',color = "black", size = 1), # Carreteras Federales
+  'g5_c3' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_estatal", cols=c(""), data = NULL,custom_filter='Estatal',color = "black", size = 1),  # Carreteras Estatales
+  'g5_c4' = list(tipo_geom="LINESTRING", group="Infraestructura Vial", nombre_buig="red_carretera_sipdus_municipal", cols=c(""), data = NULL,custom_filter='Municipal',color = "black", size = 1),  # Carreteras Municipales
   
   ## Grupo 6: Otra Infraestructura
   'g6_c1' = list(tipo_geom="POINT", group="Otra Infraestructura", nombre_buig="subestacion_electrica", cols=c("geografico", "nombre", "condicion",'geom'), data = NULL,color = "#BDAF35", size = 3),  # Estaciones eléctricas
